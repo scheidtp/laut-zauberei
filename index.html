@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laut-Zauberei 🎙️</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --s-color: #FF6B6B;
+    --sch-color: #4ECDC4;
+    --ch-color: #FFE66D;
+    --z-color: #C77DFF;
+    --bg: #1a1a2e;
+    --card-bg: #16213e;
+    --text: #eee;
+    --correct: #6BCB77;
+    --wrong: #FF6B6B;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+  }
+
+  /* Stars background */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 30% 60%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 50% 10%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 80%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 40%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(2px 2px at 20% 85%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 80% 15%, rgba(255,255,255,0.6) 0%, transparent 100%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 700px;
+    padding: 20px;
+  }
+
+  header {
+    text-align: center;
+    padding: 30px 0 10px;
+  }
+
+  .title {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(2rem, 8vw, 3.5rem);
+    background: linear-gradient(135deg, var(--s-color), var(--sch-color), var(--ch-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 2px;
+    text-shadow: none;
+  }
+
+  .subtitle {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.95rem;
+    margin-top: 5px;
+  }
+
+  /* Score bar */
+  .scorebar {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 15px 0;
+    flex-wrap: wrap;
+  }
+
+  .score-chip {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 50px;
+    padding: 6px 18px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .score-chip .emoji { font-size: 1.1rem; }
+
+  /* Mode selector */
+  .mode-tabs {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin: 20px 0;
+    flex-wrap: wrap;
+  }
+
+  .mode-tab {
+    padding: 8px 20px;
+    border-radius: 50px;
+    border: 2px solid transparent;
+    background: rgba(255,255,255,0.07);
+    color: rgba(255,255,255,0.6);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .mode-tab.active {
+    background: rgba(255,255,255,0.15);
+    color: white;
+    border-color: rgba(255,255,255,0.4);
+  }
+
+  .mode-tab:hover { background: rgba(255,255,255,0.12); }
+
+  /* Game card */
+  .game-card {
+    background: var(--card-bg);
+    border-radius: 24px;
+    padding: 30px;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    margin-bottom: 20px;
+  }
+
+  .round-label {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  /* MODUS 1: Welchen Laut hörst du? */
+  .word-display {
+    text-align: center;
+    margin: 10px 0 30px;
+  }
+
+  .big-word {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(2.5rem, 12vw, 5rem);
+    letter-spacing: 3px;
+    line-height: 1.1;
+  }
+
+  .word-hint {
+    color: rgba(255,255,255,0.45);
+    font-size: 0.9rem;
+    margin-top: 8px;
+  }
+
+  .highlight-s { color: var(--s-color); }
+  .highlight-sch { color: var(--sch-color); }
+  .highlight-ch { color: var(--ch-color); }
+
+  .answer-btns {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .ans-btn {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.6rem;
+    padding: 14px 32px;
+    border-radius: 16px;
+    border: 3px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    letter-spacing: 2px;
+    min-width: 100px;
+  }
+
+  .ans-btn.s-btn {
+    background: rgba(255,107,107,0.15);
+    color: var(--s-color);
+    border-color: var(--s-color);
+  }
+  .ans-btn.sch-btn {
+    background: rgba(78,205,196,0.15);
+    color: var(--sch-color);
+    border-color: var(--sch-color);
+  }
+  .ans-btn.ch-btn {
+    background: rgba(255,230,109,0.15);
+    color: var(--ch-color);
+    border-color: var(--ch-color);
+  }
+  .ans-btn.z-btn {
+    background: rgba(199,125,255,0.15);
+    color: var(--z-color);
+    border-color: var(--z-color);
+  }
+
+  .ans-btn:hover { transform: scale(1.07); }
+  .ans-btn:active { transform: scale(0.96); }
+
+  .ans-btn.correct-flash {
+    animation: correctPop 0.5s ease;
+  }
+  .ans-btn.wrong-flash {
+    animation: wrongShake 0.4s ease;
+  }
+
+  @keyframes correctPop {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+  @keyframes wrongShake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-8px); }
+    60% { transform: translateX(8px); }
+  }
+
+  /* MODUS 2: Sortier-Spiel */
+  .sort-instruction {
+    text-align: center;
+    font-size: 1rem;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 20px;
+  }
+
+  .sort-word-pool {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    min-height: 60px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 16px;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px dashed rgba(255,255,255,0.1);
+  }
+
+  .sort-word {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.3rem;
+    padding: 8px 18px;
+    border-radius: 50px;
+    background: rgba(255,255,255,0.1);
+    border: 2px solid rgba(255,255,255,0.2);
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+
+  .sort-word:hover { transform: scale(1.05); background: rgba(255,255,255,0.18); }
+
+  .sort-bins {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .sort-bin {
+    flex: 1;
+    min-width: 150px;
+    max-width: 200px;
+    border-radius: 16px;
+    padding: 15px 10px;
+    min-height: 120px;
+    border: 2px dashed;
+    text-align: center;
+    transition: background 0.2s;
+  }
+
+  .sort-bin.s-bin { border-color: var(--s-color); }
+  .sort-bin.sch-bin { border-color: var(--sch-color); }
+  .sort-bin.ch-bin { border-color: var(--ch-color); }
+  .sort-bin.z-bin { border-color: var(--z-color); }
+
+  .sort-bin.drag-over { background: rgba(255,255,255,0.08); }
+
+  .bin-label {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+  }
+
+  .bin-label.s-bin { color: var(--s-color); }
+  .bin-label.sch-bin { color: var(--sch-color); }
+  .bin-label.ch-bin { color: var(--ch-color); }
+  .bin-label.z-bin { color: var(--z-color); }
+
+  .bin-words {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+    min-height: 30px;
+  }
+
+  .bin-word {
+    font-size: 0.9rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 50px;
+    color: white;
+  }
+
+  .bin-word.s-word { background: rgba(255,107,107,0.5); }
+  .bin-word.sch-word { background: rgba(78,205,196,0.5); }
+  .bin-word.ch-word { background: rgba(255,230,109,0.4); color: #333; }
+  .bin-word.z-word { background: rgba(199,125,255,0.5); }
+
+  /* MODUS 3: Lückenwörter */
+  .fill-question {
+    text-align: center;
+    margin-bottom: 25px;
+  }
+
+  .fill-sentence {
+    font-size: clamp(1.3rem, 5vw, 2rem);
+    font-weight: 700;
+    line-height: 1.6;
+  }
+
+  .fill-blank {
+    display: inline-block;
+    min-width: 80px;
+    border-bottom: 3px solid rgba(255,255,255,0.4);
+    padding: 0 8px;
+    color: rgba(255,255,255,0.3);
+    font-style: italic;
+  }
+
+  .fill-options {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .fill-opt {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.1rem;
+    padding: 10px 22px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 2px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.08);
+    color: white;
+  }
+
+  .fill-opt:hover { background: rgba(255,255,255,0.18); transform: scale(1.04); }
+
+  /* Feedback overlay */
+  .feedback {
+    text-align: center;
+    padding: 15px;
+    border-radius: 16px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-top: 15px;
+    transition: all 0.3s;
+    min-height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .feedback.correct-fb { background: rgba(107,203,119,0.2); color: var(--correct); border: 1px solid var(--correct); }
+  .feedback.wrong-fb { background: rgba(255,107,107,0.2); color: var(--wrong); border: 1px solid var(--wrong); }
+  .feedback.hidden { opacity: 0; }
+
+  /* Next button */
+  .next-btn {
+    display: block;
+    margin: 20px auto 0;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.1rem;
+    padding: 12px 40px;
+    border-radius: 50px;
+    background: linear-gradient(135deg, var(--sch-color), var(--s-color));
+    color: white;
+    border: none;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+    box-shadow: 0 4px 20px rgba(78,205,196,0.3);
+  }
+
+  .next-btn:hover { transform: scale(1.05); box-shadow: 0 6px 28px rgba(78,205,196,0.45); }
+
+  /* Progress bar */
+  .progress-wrap {
+    background: rgba(255,255,255,0.07);
+    border-radius: 50px;
+    height: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+
+  .progress-bar {
+    height: 100%;
+    border-radius: 50px;
+    background: linear-gradient(90deg, var(--s-color), var(--sch-color), var(--ch-color));
+    transition: width 0.4s ease;
+  }
+
+  /* Result screen */
+  .result-screen {
+    text-align: center;
+    padding: 20px 0;
+  }
+
+  .result-emoji { font-size: 4rem; }
+
+  .result-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.5rem;
+    margin: 10px 0;
+    background: linear-gradient(135deg, var(--sch-color), var(--ch-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .result-score { font-size: 1.1rem; color: rgba(255,255,255,0.7); margin-bottom: 25px; }
+
+  .restart-btn {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.2rem;
+    padding: 14px 45px;
+    border-radius: 50px;
+    background: linear-gradient(135deg, var(--s-color), var(--ch-color));
+    color: #111;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 20px rgba(255,230,109,0.3);
+  }
+
+  .restart-btn:hover { transform: scale(1.06); }
+
+  .hidden { display: none !important; }
+
+  /* Tip box */
+  .tip-box {
+    background: rgba(255,255,255,0.05);
+    border-left: 4px solid var(--sch-color);
+    border-radius: 0 12px 12px 0;
+    padding: 12px 16px;
+    margin-top: 20px;
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.5;
+  }
+
+  .tip-box strong { color: var(--sch-color); }
+
+  /* Laut legend */
+  .laut-legend {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+
+  .laut-chip {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1rem;
+    padding: 5px 16px;
+    border-radius: 50px;
+    letter-spacing: 1px;
+  }
+
+  .laut-chip.s { background: rgba(255,107,107,0.2); color: var(--s-color); border: 1px solid var(--s-color); }
+  .laut-chip.sch { background: rgba(78,205,196,0.2); color: var(--sch-color); border: 1px solid var(--sch-color); }
+  .laut-chip.ch { background: rgba(255,230,109,0.2); color: var(--ch-color); border: 1px solid var(--ch-color); }
+  .laut-chip.z { background: rgba(199,125,255,0.2); color: var(--z-color); border: 1px solid var(--z-color); }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="title">🎙️ Laut-Zauberei</div>
+    <div class="subtitle">Logopädisches Sprachlernspiel • S · SCH · CH · Z</div>
+  </header>
+
+  <div class="scorebar">
+    <div class="score-chip"><span class="emoji">⭐</span> Punkte: <span id="scoreVal">0</span></div>
+    <div class="score-chip"><span class="emoji">🎯</span> Runde: <span id="roundVal">1</span> / 10</div>
+    <div class="score-chip"><span class="emoji">✅</span> Richtig: <span id="correctVal">0</span></div>
+  </div>
+
+  <div class="mode-tabs">
+    <button class="mode-tab active" onclick="setMode('identify')">🔊 Laut erkennen</button>
+    <button class="mode-tab" onclick="setMode('sort')">📦 Wörter sortieren</button>
+    <button class="mode-tab" onclick="setMode('fill')">✏️ Lücke füllen</button>
+    <button class="mode-tab" onclick="setMode('position')">📍 Laut orten</button>
+  </div>
+
+  <div class="game-card" id="mainCard">
+    <!-- Content injected by JS -->
+  </div>
+
+  <div class="tip-box" id="tipBox">
+    <strong>💡 Tipp:</strong> <span id="tipText">Achte genau auf den Laut am Anfang oder in der Mitte des Wortes!</span>
+  </div>
+</div>
+
+<script>
+// ─── Data ───────────────────────────────────────────────────────────────────
+// Alle Wörter nach AUSSPRACHE kategorisiert. Jedes Wort hat einen korrekten Artikel.
+// artikel: 'der'|'die'|'das' – wird in Sätzen und Hinweisen verwendet.
+const words = {
+  s: [
+    // position: 'vorn' | 'mitte' | 'ende'
+    { word: 'Sonne',    artikel: 'die', emoji: '☀️',  hint: 'leuchtet am Himmel',              lautschrift: '[S-o-n-e]',     highlight: 'S',  position: 'vorn'  },
+    { word: 'Seife',    artikel: 'die', emoji: '🧼',  hint: 'zum Händewaschen',                lautschrift: '[S-ei-fe]',     highlight: 'S',  position: 'vorn'  },
+    { word: 'Salz',     artikel: 'das', emoji: '🧂',  hint: 'macht Essen würzig',              lautschrift: '[S-alz]',       highlight: 'S',  position: 'vorn'  },
+    { word: 'Socke',    artikel: 'die', emoji: '🧦',  hint: 'trägst du am Fuß',               lautschrift: '[S-o-cke]',     highlight: 'S',  position: 'vorn'  },
+    { word: 'Suppe',    artikel: 'die', emoji: '🍲',  hint: 'warmes Gericht zum Löffeln',      lautschrift: '[S-u-ppe]',     highlight: 'S',  position: 'vorn'  },
+    { word: 'Säge',     artikel: 'die', emoji: '🪚',  hint: 'Werkzeug zum Holzsägen',          lautschrift: '[S-ä-ge]',      highlight: 'S',  position: 'vorn'  },
+    { word: 'Saft',     artikel: 'der', emoji: '🥤',  hint: 'leckeres Getränk aus Früchten',   lautschrift: '[S-aft]',       highlight: 'S',  position: 'vorn'  },
+    { word: 'Seil',     artikel: 'das', emoji: '🪢',  hint: 'zum Klettern oder Binden',        lautschrift: '[S-eil]',       highlight: 'S',  position: 'vorn'  },
+    { word: 'Sofa',     artikel: 'das', emoji: '🛋️', hint: 'bequemes Sitzmöbel',              lautschrift: '[S-o-fa]',      highlight: 'S',  position: 'vorn'  },
+    { word: 'Sieb',     artikel: 'das', emoji: '🫙',  hint: 'Küchengerät mit kleinen Löchern', lautschrift: '[S-ieb]',       highlight: 'S',  position: 'vorn'  },
+    { word: 'Sack',     artikel: 'der', emoji: '🎒',  hint: 'großer Beutel',                   lautschrift: '[S-ack]',       highlight: 'S',  position: 'vorn'  },
+    { word: 'Segel',    artikel: 'das', emoji: '⛵',  hint: 'fängt den Wind auf dem Boot',     lautschrift: '[S-e-gel]',     highlight: 'S',  position: 'vorn'  },
+    { word: 'Sense',    artikel: 'die', emoji: '🌾',  hint: 'Werkzeug zum Mähen',              lautschrift: '[S-en-se]',     highlight: 'S',  position: 'vorn'  },
+    // S in der Mitte
+    { word: 'Nase',     artikel: 'die', emoji: '👃',  hint: 'damit riecht man',                lautschrift: '[Na-S-e]',      highlight: 's',  position: 'mitte' },
+    { word: 'Hose',     artikel: 'die', emoji: '👖',  hint: 'Kleidungsstück für die Beine',    lautschrift: '[Ho-S-e]',      highlight: 's',  position: 'mitte' },
+    { word: 'Wiese',    artikel: 'die', emoji: '🌿',  hint: 'grüne Grasfläche',                lautschrift: '[Wi-S-e]',      highlight: 's',  position: 'mitte' },
+    { word: 'Esel',     artikel: 'der', emoji: '🫏',  hint: 'Tier mit langen Ohren',           lautschrift: '[E-S-el]',      highlight: 's',  position: 'mitte' },
+    { word: 'Besen',    artikel: 'der', emoji: '🧹',  hint: 'zum Fegen des Bodens',            lautschrift: '[Be-S-en]',     highlight: 's',  position: 'mitte' },
+    // S am Ende
+    { word: 'Haus',     artikel: 'das', emoji: '🏡',  hint: 'darin wohnt man',                 lautschrift: '[Hau-S]',       highlight: 's',  position: 'ende'  },
+    { word: 'Maus',     artikel: 'die', emoji: '🐭',  hint: 'kleines Tier mit langer Schwanz', lautschrift: '[Mau-S]',       highlight: 's',  position: 'ende'  },
+    { word: 'Glas',     artikel: 'das', emoji: '🥛',  hint: 'Trinkgefäß',                      lautschrift: '[Gla-S]',       highlight: 's',  position: 'ende'  },
+    { word: 'Krebs',    artikel: 'der', emoji: '🦀',  hint: 'Tier mit Scheren',                lautschrift: '[Kreb-S]',      highlight: 's',  position: 'ende'  },
+  ],
+  sch: [
+    // SCH vorn – geschrieben als "sch"
+    { word: 'Schaf',        artikel: 'das', emoji: '🐑', hint: 'Tier mit dicker Wolle',             lautschrift: '[SCH-af]',         highlight: 'Sch',  position: 'vorn'  },
+    { word: 'Schule',       artikel: 'die', emoji: '🏫', hint: 'Gebäude wo Kinder lernen',           lautschrift: '[SCH-u-le]',       highlight: 'Sch',  position: 'vorn'  },
+    { word: 'Schuh',        artikel: 'der', emoji: '👟', hint: 'trägst du am Fuß',                  lautschrift: '[SCH-uh]',         highlight: 'Sch',  position: 'vorn'  },
+    { word: 'Schere',       artikel: 'die', emoji: '✂️', hint: 'zum Schneiden von Papier',          lautschrift: '[SCH-e-re]',       highlight: 'Sch',  position: 'vorn'  },
+    { word: 'Schwein',      artikel: 'das', emoji: '🐷', hint: 'rosarotes Tier auf dem Bauernhof',  lautschrift: '[SCH-w-ein]',      highlight: 'Schw', position: 'vorn'  },
+    { word: 'Schiff',       artikel: 'das', emoji: '🚢', hint: 'fährt auf dem Wasser',              lautschrift: '[SCH-iff]',        highlight: 'Sch',  position: 'vorn'  },
+    { word: 'Schnecke',     artikel: 'die', emoji: '🐌', hint: 'Tier mit Haus auf dem Rücken',      lautschrift: '[SCH-ne-cke]',     highlight: 'Schn', position: 'vorn'  },
+    { word: 'Schlange',     artikel: 'die', emoji: '🐍', hint: 'langes Tier ohne Beine',            lautschrift: '[SCH-lan-ge]',     highlight: 'Schl', position: 'vorn'  },
+    { word: 'Schmetterling',artikel: 'der', emoji: '🦋', hint: 'buntes Insekt mit großen Flügeln',  lautschrift: '[SCH-me-ter-ling]',highlight: 'Sch',  position: 'vorn'  },
+    { word: 'Schokolade',   artikel: 'die', emoji: '🍫', hint: 'süße braune Leckerei',              lautschrift: '[SCH-o-ko-la-de]', highlight: 'Sch',  position: 'vorn'  },
+    { word: 'Schloss',      artikel: 'das', emoji: '🏰', hint: 'großes altes Gebäude',              lautschrift: '[SCH-loss]',       highlight: 'Schl', position: 'vorn'  },
+    { word: 'Schaukel',     artikel: 'die', emoji: '🪀', hint: 'damit kann man schaukeln',          lautschrift: '[SCH-au-kel]',     highlight: 'Sch',  position: 'vorn'  },
+    // SCH vorn – "st" und "sp" am Wortanfang
+    { word: 'Stein',    artikel: 'der', emoji: '🪨', hint: 'liegt auf der Erde – beginnt wie SCH!',    lautschrift: '[SCH-t-ein]',    highlight: 'St', position: 'vorn' },
+    { word: 'Stern',    artikel: 'der', emoji: '⭐', hint: 'leuchtet nachts am Himmel – beginnt wie SCH!',lautschrift: '[SCH-t-ern]', highlight: 'St', position: 'vorn' },
+    { word: 'Stiefel',  artikel: 'der', emoji: '🥾', hint: 'hoher Schuh – beginnt wie SCH!',           lautschrift: '[SCH-t-ie-fel]', highlight: 'St', position: 'vorn' },
+    { word: 'Stuhl',    artikel: 'der', emoji: '🪑', hint: 'darauf kann man sitzen – beginnt wie SCH!', lautschrift: '[SCH-t-uhl]',   highlight: 'St', position: 'vorn' },
+    { word: 'Spinne',   artikel: 'die', emoji: '🕷️', hint: 'Tier mit acht Beinen – beginnt wie SCH!',  lautschrift: '[SCH-p-i-nne]', highlight: 'Sp', position: 'vorn' },
+    { word: 'Spiel',    artikel: 'das', emoji: '🎮', hint: 'macht viel Spaß – beginnt wie SCH!',        lautschrift: '[SCH-p-iel]',   highlight: 'Sp', position: 'vorn' },
+    { word: 'Spiegel',  artikel: 'der', emoji: '🪞', hint: 'darin siehst du dich – beginnt wie SCH!',   lautschrift: '[SCH-p-ie-gel]',highlight: 'Sp', position: 'vorn' },
+    // SCH in der Mitte
+    { word: 'Fisch',      artikel: 'der', emoji: '🐟', hint: 'Tier im Wasser mit Flossen',        lautschrift: '[Fi-SCH]',        highlight: 'sch', position: 'mitte' },
+    { word: 'Tisch',      artikel: 'der', emoji: '🪑', hint: 'Möbel zum Essen und Arbeiten',       lautschrift: '[Ti-SCH]',        highlight: 'sch', position: 'mitte' },
+    { word: 'Tasche',     artikel: 'die', emoji: '👜', hint: 'darin trägt man Sachen',             lautschrift: '[Ta-SCH-e]',      highlight: 'sch', position: 'mitte' },
+    { word: 'Wäsche',     artikel: 'die', emoji: '👕', hint: 'Kleidung zum Waschen',               lautschrift: '[Wä-SCH-e]',      highlight: 'sch', position: 'mitte' },
+    { word: 'Dusche',     artikel: 'die', emoji: '🚿', hint: 'damit wäscht man sich',              lautschrift: '[Du-SCH-e]',      highlight: 'sch', position: 'mitte' },
+    { word: 'Kirsche',    artikel: 'die', emoji: '🍒', hint: 'rote süße Frucht',                   lautschrift: '[Kir-SCH-e]',     highlight: 'sch', position: 'mitte' },
+    // SCH am Ende
+    { word: 'Tisch',      artikel: 'der', emoji: '🪑', hint: 'darauf stellt man Teller',           lautschrift: '[Ti-SCH]',        highlight: 'sch', position: 'ende'  },
+    { word: 'Wunsch',     artikel: 'der', emoji: '⭐', hint: 'etwas das man sich erhofft',         lautschrift: '[Wun-SCH]',       highlight: 'sch', position: 'ende'  },
+    { word: 'Busch',      artikel: 'der', emoji: '🌿', hint: 'kleiner Strauch',                    lautschrift: '[Bu-SCH]',        highlight: 'sch', position: 'ende'  },
+    { word: 'Rausch',     artikel: 'der', emoji: '🌊', hint: 'lautes Rauschen des Wassers',        lautschrift: '[Rau-SCH]',       highlight: 'sch', position: 'ende'  },
+  ],
+  ch: [
+    // CH in der Mitte – Ach-Laut
+    { word: 'Kuchen',  artikel: 'der', emoji: '🎂', hint: 'süßes Gebäck – Ach-Laut',                lautschrift: '[Ku-CH-en]',   highlight: 'ch', position: 'mitte' },
+    { word: 'Lachen',  artikel: 'das', emoji: '😂', hint: 'wenn etwas lustig ist – Ach-Laut',        lautschrift: '[La-CH-en]',   highlight: 'ch', position: 'mitte' },
+    { word: 'Kochen',  artikel: 'das', emoji: '👨‍🍳',hint: 'Essen zubereiten – Ach-Laut',           lautschrift: '[Ko-CH-en]',   highlight: 'ch', position: 'mitte' },
+    { word: 'Mädchen', artikel: 'das', emoji: '👧', hint: 'weibliches Kind – Ich-Laut',              lautschrift: '[Mäd-CH-en]',  highlight: 'ch', position: 'mitte' },
+    { word: 'Büchse',  artikel: 'die', emoji: '🥫', hint: 'Dose aus Metall – Ich-Laut',              lautschrift: '[Büch-se]',    highlight: 'ch', position: 'mitte' },
+    { word: 'Kirche',  artikel: 'die', emoji: '⛪', hint: 'Gebäude mit Turm und Glocke – Ich-Laut',  lautschrift: '[Kir-CH-e]',   highlight: 'ch', position: 'mitte' },
+    { word: 'Suche',   artikel: 'die', emoji: '🔍', hint: 'wenn man etwas sucht – Ich-Laut',         lautschrift: '[Su-CH-e]',    highlight: 'ch', position: 'mitte' },
+    { word: 'Becher',  artikel: 'der', emoji: '🥤', hint: 'Trinkgefäß ohne Henkel – Ich-Laut',       lautschrift: '[Be-CH-er]',   highlight: 'ch', position: 'mitte' },
+    { word: 'Brechen', artikel: 'das', emoji: '💥', hint: 'wenn etwas kaputt geht – Ich-Laut',        lautschrift: '[Bre-CH-en]',  highlight: 'ch', position: 'mitte' },
+    { word: 'Weiche',  artikel: 'die', emoji: '🚂', hint: 'lenkt Züge auf andere Gleise – Ich-Laut', lautschrift: '[Wei-CH-e]',   highlight: 'ch', position: 'mitte' },
+    // CH am Ende – Ach-Laut
+    { word: 'Buch',    artikel: 'das', emoji: '📚', hint: 'zum Lesen – Ach-Laut',                    lautschrift: '[Bu-CH]',      highlight: 'ch', position: 'ende'  },
+    { word: 'Nacht',   artikel: 'die', emoji: '🌙', hint: 'wenn es dunkel ist – Ach-Laut',            lautschrift: '[Na-CH-t]',    highlight: 'ch', position: 'ende'  },
+    { word: 'Dach',    artikel: 'das', emoji: '🏠', hint: 'oben am Haus – Ach-Laut',                  lautschrift: '[Da-CH]',      highlight: 'ch', position: 'ende'  },
+    { word: 'Bauch',   artikel: 'der', emoji: '🫃', hint: 'Körperteil am Rumpf – Ach-Laut',           lautschrift: '[Bau-CH]',     highlight: 'ch', position: 'ende'  },
+    { word: 'Loch',    artikel: 'das', emoji: '🕳️',hint: 'Öffnung in der Erde – Ach-Laut',           lautschrift: '[Lo-CH]',      highlight: 'ch', position: 'ende'  },
+    { word: 'Koch',    artikel: 'der', emoji: '👨‍🍳',hint: 'bereitet Essen zu – Ach-Laut',           lautschrift: '[Ko-CH]',      highlight: 'ch', position: 'ende'  },
+    { word: 'Tuch',    artikel: 'das', emoji: '🧣', hint: 'weiches Stück Stoff – Ach-Laut',           lautschrift: '[Tu-CH]',      highlight: 'ch', position: 'ende'  },
+    { word: 'Fach',    artikel: 'das', emoji: '📂', hint: 'Abteil in einem Schrank – Ach-Laut',       lautschrift: '[Fa-CH]',      highlight: 'ch', position: 'ende'  },
+    // CH am Ende – Ich-Laut
+    { word: 'Milch',   artikel: 'die', emoji: '🥛', hint: 'weißes Getränk von der Kuh – Ich-Laut',   lautschrift: '[Mil-CH]',     highlight: 'ch', position: 'ende'  },
+    { word: 'Pech',    artikel: 'das', emoji: '😬', hint: 'wenn man Unglück hat – Ich-Laut',          lautschrift: '[Pe-CH]',      highlight: 'ch', position: 'ende'  },
+    { word: 'Storch',  artikel: 'der', emoji: '🦢', hint: 'großer weißer Vogel – Ach-Laut',           lautschrift: '[Stor-CH]',    highlight: 'ch', position: 'ende'  },
+  ]
+};
+
+// Z-Laut: [ts] – geschrieben als z, tz, oder zw am Anfang
+words.z = [
+  // Z vorn
+  { word: 'Zahn',    artikel: 'der', emoji: '🦷', hint: 'zum Kauen und Beißen',            lautschrift: '[Z-ahn]',       highlight: 'Z',  position: 'vorn'  },
+  { word: 'Zug',     artikel: 'der', emoji: '🚂', hint: 'fährt auf Schienen',              lautschrift: '[Z-ug]',        highlight: 'Z',  position: 'vorn'  },
+  { word: 'Zelt',    artikel: 'das', emoji: '⛺', hint: 'schlafen beim Camping',           lautschrift: '[Z-elt]',       highlight: 'Z',  position: 'vorn'  },
+  { word: 'Ziege',   artikel: 'die', emoji: '🐐', hint: 'Tier auf dem Bauernhof',          lautschrift: '[Z-ie-ge]',     highlight: 'Z',  position: 'vorn'  },
+  { word: 'Zebra',   artikel: 'das', emoji: '🦓', hint: 'schwarz-weißes Tier',             lautschrift: '[Z-e-bra]',     highlight: 'Z',  position: 'vorn'  },
+  { word: 'Zitrone', artikel: 'die', emoji: '🍋', hint: 'saure gelbe Frucht',              lautschrift: '[Z-it-ro-ne]',  highlight: 'Z',  position: 'vorn'  },
+  { word: 'Zaun',    artikel: 'der', emoji: '🪵', hint: 'trennt Grundstücke',              lautschrift: '[Z-aun]',       highlight: 'Z',  position: 'vorn'  },
+  { word: 'Zange',   artikel: 'die', emoji: '🔧', hint: 'Werkzeug zum Greifen',            lautschrift: '[Z-an-ge]',     highlight: 'Z',  position: 'vorn'  },
+  { word: 'Zahl',    artikel: 'die', emoji: '🔢', hint: 'damit zählt man',                 lautschrift: '[Z-ahl]',       highlight: 'Z',  position: 'vorn'  },
+  { word: 'Zwiebel', artikel: 'die', emoji: '🧅', hint: 'Gemüse das beim Schneiden weint', lautschrift: '[Zw-ie-bel]',   highlight: 'Zw', position: 'vorn'  },
+  { word: 'Zwerg',   artikel: 'der', emoji: '🧙', hint: 'kleines Fabelwesen',              lautschrift: '[Zw-erg]',      highlight: 'Zw', position: 'vorn'  },
+  { word: 'Zopf',    artikel: 'der', emoji: '👱', hint: 'geflochtene Haare',               lautschrift: '[Z-opf]',       highlight: 'Z',  position: 'vorn'  },
+  // Z in der Mitte (tz / z)
+  { word: 'Katze',   artikel: 'die', emoji: '🐱', hint: 'beliebtes Haustier',              lautschrift: '[Ka-TZ-e]',     highlight: 'tz', position: 'mitte' },
+  { word: 'Kerze',   artikel: 'die', emoji: '🕯️',hint: 'leuchtet mit Flamme',             lautschrift: '[Ker-Z-e]',     highlight: 'z',  position: 'mitte' },
+  { word: 'Mütze',   artikel: 'die', emoji: '🧢', hint: 'Kopfbedeckung',                   lautschrift: '[Mü-TZ-e]',     highlight: 'tz', position: 'mitte' },
+  { word: 'Wurzel',  artikel: 'die', emoji: '🌱', hint: 'wächst unter der Erde',           lautschrift: '[Wur-Z-el]',    highlight: 'z',  position: 'mitte' },
+  { word: 'Pfütze',  artikel: 'die', emoji: '💧', hint: 'Wasserlache nach dem Regen',      lautschrift: '[Pfü-TZ-e]',    highlight: 'tz', position: 'mitte' },
+  { word: 'Netz',    artikel: 'das', emoji: '🕸️',hint: 'zum Fangen von Fischen',          lautschrift: '[Ne-TZ]',       highlight: 'tz', position: 'mitte' },
+  { word: 'Tatze',   artikel: 'die', emoji: '🐾', hint: 'Pfote eines Tieres',              lautschrift: '[Ta-TZ-e]',     highlight: 'tz', position: 'mitte' },
+  // Z am Ende (z / tz)
+  { word: 'Sitz',    artikel: 'der', emoji: '💺', hint: 'Platz zum Hinsetzen',             lautschrift: '[Si-TZ]',       highlight: 'tz', position: 'ende'  },
+  { word: 'Witz',    artikel: 'der', emoji: '😄', hint: 'macht Leute lachen',              lautschrift: '[Wi-TZ]',       highlight: 'tz', position: 'ende'  },
+  { word: 'Schatz',  artikel: 'der', emoji: '💎', hint: 'wertvoller Fund',                 lautschrift: '[Scha-TZ]',     highlight: 'tz', position: 'ende'  },
+  { word: 'Pelz',    artikel: 'der', emoji: '🦊', hint: 'weiches Tierfell',                lautschrift: '[Pel-Z]',       highlight: 'z',  position: 'ende'  },
+  { word: 'Pilz',    artikel: 'der', emoji: '🍄', hint: 'wächst im Wald',                  lautschrift: '[Pil-Z]',       highlight: 'z',  position: 'ende'  },
+  { word: 'Kreuz',   artikel: 'das', emoji: '✝️', hint: 'Form mit zwei Linien',            lautschrift: '[Kreu-Z]',      highlight: 'z',  position: 'ende'  },
+];
+
+// Artikel-Hilfsfunktion: bestimmter Artikel im Nominativ
+function artDef(w) { return w.artikel; }
+// Artikel als Großbuchstabe für Satzanfang
+function artDefCap(w) { return w.artikel.charAt(0).toUpperCase() + w.artikel.slice(1); }
+
+const fillQuestions = [
+  // S-Laute
+  { sentence: 'Die ____ scheint heute besonders hell.', options: ['Sonne ☀️', 'Schule 🏫', 'Kirche ⛪'], answer: 0, sound: 's' },
+  { sentence: 'Ich wasche meine Hände mit der ____.', options: ['Seife 🧼', 'Schere ✂️', 'Milch 🥛'], answer: 0, sound: 's' },
+  { sentence: 'Papa trinkt einen Glas ____ zum Frühstück.', options: ['Saft 🥤', 'Schiff 🚢', 'Buch 📚'], answer: 0, sound: 's' },
+  { sentence: 'Ich sitze gemütlich auf dem ____.', options: ['Sofa 🛋️', 'Schuh 👟', 'Dach 🏠'], answer: 0, sound: 's' },
+  { sentence: 'Das ____ hängt an der Kletterwand.', options: ['Säge 🪚', 'Seil 🪢', 'Schere ✂️'], answer: 1, sound: 's' },
+  // SCH-Laute
+  { sentence: 'Das ____ blökt laut auf der Wiese.', options: ['Sofa 🛋️', 'Buch 📚', 'Schaf 🐑'], answer: 2, sound: 'sch' },
+  { sentence: 'Das ____ fährt über das Meer.', options: ['Schiff 🚢', 'Saft 🥤', 'Tuch 🧣'], answer: 0, sound: 'sch' },
+  { sentence: 'Mama schneidet Papier mit der ____.', options: ['Suppe 🍲', 'Schere ✂️', 'Nacht 🌙'], answer: 1, sound: 'sch' },
+  { sentence: 'Die ____ kriecht ganz langsam über den Weg.', options: ['Sonne ☀️', 'Socke 🧦', 'Schnecke 🐌'], answer: 2, sound: 'sch' },
+  { sentence: 'Der ____ liegt auf dem Spielplatz.', options: ['Schuh 👟', 'Stein 🪨', 'Kuchen 🎂'], answer: 1, sound: 'sch',
+    extraInfo: '„Stein" beginnt mit ST – das klingt wie SCH+T: [SCHtein]!' },
+  { sentence: 'Die ____ hat acht Beine.', options: ['Seife 🧼', 'Spinne 🕷️', 'Milch 🥛'], answer: 1, sound: 'sch',
+    extraInfo: '„Spinne" beginnt mit SP – das klingt wie SCH+P: [SCHpinne]!' },
+  { sentence: 'Der ____ leuchtet in der Nacht.', options: ['Stern ⭐', 'Saft 🥤', 'Koch 👨‍🍳'], answer: 0, sound: 'sch',
+    extraInfo: '„Stern" beginnt mit ST – das klingt wie SCH+T: [SCHtern]!' },
+  // CH-Laute
+  { sentence: 'Ich lese gern in einem ____.', options: ['Schaf 🐑', 'Buch 📚', 'Seife 🧼'], answer: 1, sound: 'ch' },
+  { sentence: 'Ich trinke jeden Tag meine ____.', options: ['Seil 🪢', 'Schule 🏫', 'Milch 🥛'], answer: 2, sound: 'ch' },
+  { sentence: 'Zum Geburtstag backen wir einen ____.', options: ['Kuchen 🎂', 'Schuh 👟', 'Salz 🧂'], answer: 0, sound: 'ch' },
+  { sentence: 'Es ist schon spät – bald kommt die ____.', options: ['Sonne ☀️', 'Schere ✂️', 'Nacht 🌙'], answer: 2, sound: 'ch' },
+  { sentence: 'Das ____ schläft oben im Bett.', options: ['Mädchen 👧', 'Schiff 🚢', 'Seil 🪢'], answer: 0, sound: 'ch' },
+  { sentence: 'Oben auf dem Haus sitzt das ____.', options: ['Sofa 🛋️', 'Dach 🏠', 'Schaf 🐑'], answer: 1, sound: 'ch' },
+  // Z-Laute
+  { sentence: 'Der ____ fährt pünktlich am Bahnhof an.', options: ['Zaun 🪵', 'Zug 🚂', 'Buch 📚'], answer: 1, sound: 'z' },
+  { sentence: 'Die ____ ist sehr sauer.', options: ['Zitrone 🍋', 'Schule 🏫', 'Nacht 🌙'], answer: 0, sound: 'z' },
+  { sentence: 'Die ____ schläft gern auf dem Sofa.', options: ['Sonne ☀️', 'Schere ✂️', 'Katze 🐱'], answer: 2, sound: 'z' },
+  { sentence: 'Wir schlafen im ____ beim Camping.', options: ['Zelt ⛺', 'Schiff 🚢', 'Dach 🏠'], answer: 0, sound: 'z' },
+  { sentence: 'Das ____ hat schwarz-weiße Streifen.', options: ['Schaf 🐑', 'Zebra 🦓', 'Kuchen 🎂'], answer: 1, sound: 'z' },
+  { sentence: 'Die ____ trägt man auf dem Kopf.', options: ['Seife 🧼', 'Milch 🥛', 'Mütze 🧢'], answer: 2, sound: 'z' },
+  { sentence: 'Der ____ liegt in der Erde versteckt.', options: ['Schatz 💎', 'Saft 🥤', 'Tuch 🧣'], answer: 0, sound: 'z' },
+  { sentence: 'Die ____ wächst unter dem Baum.', options: ['Socke 🧦', 'Wurzel 🌱', 'Kirche ⛪'], answer: 1, sound: 'z' },
+];
+
+const tips = {
+  s: '\"S\" klingt wie ein leises Zischen – aber nur vor Vokalen: Sonne, Seife, Salz 🐍',
+  sch: '\"SCH\" klingt wie Schweigen: shhh 🤫 – Achtung: auch ST und SP am Wortanfang klingen wie SCH! Stein = [SCHtein], Spiel = [SCHpiel]',
+  ch: '\"CH\" hat zwei Klänge: nach a/o/u = Ach-Laut (Bu-CH, Na-CHt) · nach e/i/ä = Ich-Laut (Mäd-CH-en, Mil-CH) 🔥',
+  z: '\"Z\" klingt wie ein kurzes TS – wie in Zug, Zahn, Katze 🦓 Auch tz und zw enthalten diesen Laut!',
+  general: '⚠️ Merke: „ST" und „SP" am Wortanfang klingen immer wie SCH! Stein→[SCHtein] · Spinne→[SCHpinne]',
+  position: '📍 Höre genau hin: Ist der Laut ganz am Anfang, irgendwo in der Mitte oder am Ende des Wortes?'
+};
+
+// ─── State ──────────────────────────────────────────────────────────────────
+let mode = 'identify';
+let score = 0;
+let round = 0;
+let correctCount = 0;
+let currentItem = null;
+let answered = false;
+const TOTAL_ROUNDS = 10;
+
+// Protokoll jeder Runde für die Abschlussauswertung
+// Einträge: { emoji, word, artikel, laut, position, correctAnswer, givenAnswer, wasCorrect, mode }
+let roundLog = [];
+
+// Sort mode state
+let sortWords = [];
+let sortBins = { s: [], sch: [], ch: [] };
+let sortPool = [];
+
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
+
+function allWordsList() {
+  const all = [];
+  ['s','sch','ch','z'].forEach(type => words[type].forEach(w => all.push({...w, type})));
+  return shuffle(all);
+}
+
+function updateScoreboard() {
+  document.getElementById('scoreVal').textContent = score;
+  document.getElementById('roundVal').textContent = Math.min(round + 1, TOTAL_ROUNDS);
+  document.getElementById('correctVal').textContent = correctCount;
+}
+
+function setTip(type) {
+  document.getElementById('tipText').textContent = tips[type] || tips.general;
+}
+
+// ─── Mode switching ──────────────────────────────────────────────────────────
+function setMode(m) {
+  mode = m;
+  round = 0; score = 0; correctCount = 0;
+  document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
+  event.target.classList.add('active');
+  updateScoreboard();
+  renderGame();
+}
+
+// ─── Main render ─────────────────────────────────────────────────────────────
+function renderGame() {
+  if (round >= TOTAL_ROUNDS) { showResults(); return; }
+  if (mode === 'identify') renderIdentify();
+  else if (mode === 'sort') renderSort();
+  else if (mode === 'position') renderPosition();
+  else renderFill();
+}
+
+// Helper: highlight letters in word
+function highlightWord(word, highlight, colorVar) {
+  if (!highlight) return word;
+  const idx = word.toLowerCase().indexOf(highlight.toLowerCase());
+  if (idx === -1) return word;
+  const before = word.slice(0, idx);
+  const match = word.slice(idx, idx + highlight.length);
+  const after = word.slice(idx + highlight.length);
+  return `${before}<span style="color:${colorVar};text-decoration:underline;text-underline-offset:6px">${match}</span>${after}`;
+}
+
+// ─── MODE 1: Identify ────────────────────────────────────────────────────────
+function renderIdentify() {
+  const all = allWordsList();
+  currentItem = all[Math.floor(Math.random() * all.length)];
+  answered = false;
+
+  const colorMap = { s: 'var(--s-color)', sch: 'var(--sch-color)', ch: 'var(--ch-color)', z: 'var(--z-color)' };
+  const progress = (round / TOTAL_ROUNDS) * 100;
+  const wordHighlighted = highlightWord(currentItem.word, currentItem.highlight, colorMap[currentItem.type]);
+
+  document.getElementById('mainCard').innerHTML = `
+    <div class="round-label">Runde ${round + 1} von ${TOTAL_ROUNDS}</div>
+    <div class="progress-wrap"><div class="progress-bar" style="width:${progress}%"></div></div>
+
+    <div class="laut-legend">
+      <span class="laut-chip s">S</span>
+      <span class="laut-chip sch">SCH</span>
+      <span class="laut-chip ch">CH</span>
+      <span class="laut-chip z">Z</span>
+    </div>
+
+    <div class="word-display">
+      <div style="text-align:center;margin-bottom:4px">
+        <span style="font-size:1rem;color:rgba(255,255,255,0.35);filter:blur(5px);transition:filter 0.4s" id="artikelEl">${currentItem.artikel}</span>
+      </div>
+      <div class="big-word" style="filter:blur(7px);transition:filter 0.4s" id="wordEl">${wordHighlighted}</div>
+      <div class="word-hint" style="margin-top:10px">${currentItem.emoji} – ${currentItem.artikel} ${currentItem.hint}</div>
+      <div style="margin-top:8px;font-family:'Fredoka One',cursive;font-size:1rem;color:rgba(255,255,255,0.25);letter-spacing:2px;filter:blur(5px);transition:filter 0.4s" id="lautEl">
+        ${currentItem.lautschrift}
+      </div>
+      <button onclick="document.getElementById('wordEl').style.filter='none';document.getElementById('lautEl').style.filter='none';document.getElementById('artikelEl').style.filter='none'" 
+        style="margin-top:10px;background:none;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);border-radius:50px;padding:5px 16px;font-size:0.78rem;cursor:pointer">
+        👁 Wort &amp; Lautschrift zeigen
+      </button>
+    </div>
+
+    <p style="text-align:center;color:rgba(255,255,255,0.55);font-size:0.9rem;margin-bottom:15px">
+      Welchen <strong style="color:white">Laut</strong> hörst du in diesem Wort?
+    </p>
+
+    <div class="answer-btns">
+      <button class="ans-btn s-btn" onclick="answerIdentify('s', this)">S</button>
+      <button class="ans-btn sch-btn" onclick="answerIdentify('sch', this)">SCH</button>
+      <button class="ans-btn ch-btn" onclick="answerIdentify('ch', this)">CH</button>
+      <button class="ans-btn z-btn" onclick="answerIdentify('z', this)">Z</button>
+    </div>
+
+    <div class="feedback hidden" id="feedback"></div>
+  `;
+  setTip(currentItem.type);
+}
+
+function answerIdentify(chosen, btn) {
+  if (answered) return;
+  answered = true;
+  const correct = chosen === currentItem.type;
+  const fb = document.getElementById('feedback');
+  fb.classList.remove('hidden');
+
+  // Reveal the word
+  document.getElementById('wordEl').style.filter = 'none';
+  document.getElementById('lautEl').style.filter = 'none';
+
+  // Extra phonetic explanation for tricky words (st/sp written as S but sounds like SCH)
+  const trickyNote = currentItem.highlight && ['St','Sp'].includes(currentItem.highlight)
+    ? `<br><span style="font-size:0.85rem;opacity:0.85">💡 „${currentItem.highlight}" am Wortanfang klingt wie <strong>SCH+${currentItem.highlight[1]}</strong>: ${currentItem.lautschrift}</span>`
+    : `<br><span style="font-size:0.85rem;opacity:0.85">Aussprache: ${currentItem.lautschrift}</span>`;
+
+  if (correct) {
+    score += 10;
+    correctCount++;
+    btn.classList.add('correct-flash');
+    fb.className = 'feedback correct-fb';
+    fb.innerHTML = `✅ Richtig! <strong>${currentItem.word}</strong> klingt mit <strong>${currentItem.type.toUpperCase()}</strong>!${trickyNote}`;
+  } else {
+    btn.classList.add('wrong-flash');
+    fb.className = 'feedback wrong-fb';
+    fb.innerHTML = `❌ Nicht ganz. Der Klang in <strong>${currentItem.word}</strong> ist <strong>${currentItem.type.toUpperCase()}</strong>!${trickyNote}`;
+    document.querySelectorAll('.ans-btn').forEach(b => {
+      if (b.textContent.toLowerCase().trim() === currentItem.type) b.style.boxShadow = `0 0 0 3px var(--correct)`;
+    });
+  }
+
+  roundLog.push({
+    emoji: currentItem.emoji,
+    word: currentItem.word,
+    artikel: currentItem.artikel,
+    lautschrift: currentItem.lautschrift,
+    correctAnswer: currentItem.type.toUpperCase(),
+    givenAnswer: chosen.toUpperCase(),
+    wasCorrect: correct,
+    mode: 'identify',
+    question: 'Welcher Laut?'
+  });
+
+  updateScoreboard();
+  setTip(currentItem.type);
+
+  setTimeout(() => {
+    round++;
+    renderGame();
+  }, 2400);
+}
+
+// ─── MODE 2: Sort ────────────────────────────────────────────────────────────
+function renderSort() {
+  const pool = shuffle(allWordsList()).slice(0, 9);
+  let bins = { s: [], sch: [], ch: [], z: [] };
+  let poolItems = [...pool];
+
+  function renderSortHTML() {
+    const poolHTML = poolItems.map((w, i) =>
+      `<span class="sort-word" onclick="sortWord(${i})"><span style="font-size:0.7em;opacity:0.6;margin-right:3px">${w.artikel}</span>${w.emoji} ${w.word}</span>`
+    ).join('');
+
+    const binHTML = (type, label) => `
+      <div class="sort-bin ${type}-bin" id="bin-${type}">
+        <div class="bin-label ${type}-bin">${label}</div>
+        <div class="bin-words" id="binwords-${type}">
+          ${bins[type].map(w => `<span class="bin-word ${type}-word"><span style="font-size:0.75em;opacity:0.7">${w.artikel} </span>${w.emoji} ${w.word}</span>`).join('')}
+        </div>
+      </div>`;
+
+    const allPlaced = poolItems.length === 0;
+    const progress = (round / TOTAL_ROUNDS) * 100;
+
+    document.getElementById('mainCard').innerHTML = `
+      <div class="round-label">Runde ${round + 1} von ${TOTAL_ROUNDS} • Tippe ein Wort, dann die Kiste!</div>
+      <div class="progress-wrap"><div class="progress-bar" style="width:${progress}%"></div></div>
+      <p class="sort-instruction">Sortiere die Wörter nach ihrem Laut!</p>
+      <div class="sort-word-pool" id="pool">${poolHTML || '<span style="color:rgba(255,255,255,0.3);font-size:0.9rem">Alle Wörter wurden sortiert!</span>'}</div>
+      <div class="sort-bins">
+        ${binHTML('s','S')}
+        ${binHTML('sch','SCH')}
+        ${binHTML('ch','CH')}
+        ${binHTML('z','Z')}
+      </div>
+      ${allPlaced ? `<button class="next-btn" onclick="checkSort(pool_ref, bins_ref)">Auswerten ✨</button>` : ''}
+      <div class="feedback hidden" id="feedback"></div>
+    `;
+
+    // expose refs for button
+    window.pool_ref = poolItems;
+    window.bins_ref = bins;
+  }
+
+  let selectedWordIdx = null;
+
+  window.sortWord = function(idx) {
+    selectedWordIdx = idx;
+    document.querySelectorAll('.sort-word').forEach((el, i) => {
+      el.style.background = i === idx ? 'rgba(78,205,196,0.35)' : 'rgba(255,255,255,0.1)';
+      el.style.borderColor = i === idx ? 'var(--sch-color)' : 'rgba(255,255,255,0.2)';
+    });
+    // show bin buttons
+    document.querySelectorAll('.sort-bin').forEach(bin => {
+      bin.style.cursor = 'pointer';
+      bin.onclick = () => {
+        if (selectedWordIdx === null) return;
+        const type = bin.id.replace('bin-','');
+        bins[type].push(poolItems[selectedWordIdx]);
+        poolItems.splice(selectedWordIdx, 1);
+        selectedWordIdx = null;
+        renderSortHTML();
+        window.sortWord = arguments.callee.__proto__ || (() => {});
+        // Re-attach
+        initSortHandlers();
+      };
+    });
+  };
+
+  function initSortHandlers() {
+    document.querySelectorAll('.sort-word').forEach((el, i) => {
+      el.onclick = () => { window.sortWord(i); initSortHandlers(); };
+    });
+    document.querySelectorAll('.sort-bin').forEach(bin => {
+      bin.onclick = () => {
+        if (selectedWordIdx === null) return;
+        const type = bin.id.replace('bin-','');
+        bins[type].push(poolItems[selectedWordIdx]);
+        poolItems.splice(selectedWordIdx, 1);
+        selectedWordIdx = null;
+        renderSortHTML(); initSortHandlers();
+      };
+    });
+  }
+
+  window.checkSort = function() {
+    let correct = 0, total = 0;
+    ['s','sch','ch','z'].forEach(type => {
+      bins[type].forEach(w => {
+        total++;
+        const wasCorrect = w.type === type;
+        if (wasCorrect) correct++;
+        roundLog.push({
+          emoji: w.emoji,
+          word: w.word,
+          artikel: w.artikel,
+          lautschrift: w.lautschrift,
+          laut: w.type.toUpperCase(),
+          correctAnswer: w.type.toUpperCase(),
+          givenAnswer: type.toUpperCase(),
+          wasCorrect,
+          mode: 'sort',
+          question: 'Wörter sortieren'
+        });
+      });
+    });
+    const pct = total > 0 ? Math.round((correct/total)*100) : 0;
+    score += correct * 5;
+    correctCount += correct;
+    round = TOTAL_ROUNDS;
+    updateScoreboard();
+
+    const fb = document.getElementById('feedback');
+    fb.classList.remove('hidden');
+    if (pct >= 80) {
+      fb.className = 'feedback correct-fb';
+      fb.innerHTML = `🎉 Super! ${correct} von ${total} richtig (${pct}%)!`;
+    } else {
+      fb.className = 'feedback wrong-fb';
+      fb.innerHTML = `🤔 ${correct} von ${total} richtig (${pct}%). Probiere es nochmal!`;
+    }
+
+    setTimeout(() => showResults(), 2000);
+  };
+
+  renderSortHTML();
+  initSortHandlers();
+  setTip('general');
+}
+
+// ─── MODE 3: Fill ────────────────────────────────────────────────────────────
+function renderFill() {
+  const qIdx = round % fillQuestions.length;
+  const q = fillQuestions[qIdx];
+  answered = false;
+  const progress = (round / TOTAL_ROUNDS) * 100;
+
+  const optBtns = q.options.map((opt, i) =>
+    `<button class="fill-opt" onclick="answerFill(${i}, this, ${q.answer}, '${q.sound}', ${qIdx})">${opt}</button>`
+  ).join('');
+
+  document.getElementById('mainCard').innerHTML = `
+    <div class="round-label">Runde ${round + 1} von ${TOTAL_ROUNDS}</div>
+    <div class="progress-wrap"><div class="progress-bar" style="width:${progress}%"></div></div>
+
+    <div class="fill-question">
+      <p style="color:rgba(255,255,255,0.5);font-size:0.85rem;margin-bottom:10px">Welches Wort passt in die Lücke?</p>
+      <div class="fill-sentence">${q.sentence.replace('____', `<span class="fill-blank">${'___'}</span>`)}</div>
+    </div>
+
+    <div class="fill-options">${optBtns}</div>
+    <div class="feedback hidden" id="feedback"></div>
+  `;
+  setTip(q.sound);
+}
+
+function answerFill(idx, btn, correctIdx, sound, qIdx) {
+  if (answered) return;
+  answered = true;
+  const q = fillQuestions[qIdx];
+  const correct = idx === correctIdx;
+  const fb = document.getElementById('feedback');
+  fb.classList.remove('hidden');
+
+  document.querySelectorAll('.fill-opt').forEach((b, i) => {
+    b.disabled = true;
+    if (i === correctIdx) b.style.background = 'rgba(107,203,119,0.3)';
+    if (i === idx && !correct) b.style.background = 'rgba(255,107,107,0.3)';
+  });
+
+  const extra = q.extraInfo ? `<br><span style="font-size:0.85rem;opacity:0.85">💡 ${q.extraInfo}</span>` : '';
+
+  if (correct) {
+    score += 10;
+    correctCount++;
+    fb.className = 'feedback correct-fb';
+    fb.innerHTML = `✅ Richtig! Laut <strong>${sound.toUpperCase()}</strong> – gut gehört!${extra}`;
+  } else {
+    fb.className = 'feedback wrong-fb';
+    const correctWord = document.querySelectorAll('.fill-opt')[correctIdx].textContent;
+    fb.innerHTML = `❌ Richtig wäre <strong>${correctWord}</strong> (Laut: <strong>${sound.toUpperCase()}</strong>).${extra}`;
+  }
+
+  roundLog.push({
+    emoji: q.options[correctIdx].split(' ').pop(),
+    word: q.options[correctIdx].replace(/\s\S+$/, ''),
+    lautschrift: '',
+    correctAnswer: q.options[correctIdx],
+    givenAnswer: q.options[idx],
+    wasCorrect: correct,
+    mode: 'fill',
+    question: q.sentence.replace('____', '___')
+  });
+
+  updateScoreboard();
+  setTip(sound);
+
+  setTimeout(() => { round++; renderGame(); }, 2400);
+}
+
+
+// ─── MODE 4: Position ────────────────────────────────────────────────────────
+// Zeigt ein Wort + Emoji. Spieler wählt: ist der Ziel-Laut vorn / mitte / ende?
+function renderPosition() {
+  const all = allWordsList().filter(w => w.position); // nur Wörter mit position-Feld
+  currentItem = all[Math.floor(Math.random() * all.length)];
+  answered = false;
+
+  const colorMap = { s: 'var(--s-color)', sch: 'var(--sch-color)', ch: 'var(--ch-color)', z: 'var(--z-color)' };
+  const lautLabel = currentItem.type.toUpperCase();
+  const color = colorMap[currentItem.type];
+  const progress = (round / TOTAL_ROUNDS) * 100;
+  const wordHighlighted = highlightWord(currentItem.word, currentItem.highlight, color);
+
+  // Visuelle Wort-Positions-Leiste: drei Felder, das richtige leuchtet nach Antwort auf
+  document.getElementById('mainCard').innerHTML = `
+    <div class="round-label">Runde ${round + 1} von ${TOTAL_ROUNDS}</div>
+    <div class="progress-wrap"><div class="progress-bar" style="width:${progress}%"></div></div>
+
+    <div style="text-align:center;margin-bottom:6px">
+      <span style="font-size:0.85rem;color:rgba(255,255,255,0.4)">Finde den Laut</span>
+      <span style="font-family:'Fredoka One',cursive;font-size:1.1rem;color:${color};margin-left:6px">${lautLabel}</span>
+    </div>
+
+    <div class="word-display">
+      <div style="font-size:4rem;text-align:center;margin-bottom:4px">${currentItem.emoji}</div>
+      <div class="big-word" style="font-size:clamp(2rem,9vw,3.8rem);filter:blur(7px);transition:filter 0.4s" id="wordEl">${wordHighlighted}</div>
+      <div class="word-hint" style="margin-top:8px">${currentItem.artikel} ${currentItem.hint}</div>
+      <button onclick="document.getElementById('wordEl').style.filter='none'" 
+        style="margin-top:8px;background:none;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);border-radius:50px;padding:4px 14px;font-size:0.78rem;cursor:pointer">
+        👁 Wort zeigen
+      </button>
+    </div>
+
+    <p style="text-align:center;color:rgba(255,255,255,0.55);font-size:0.9rem;margin:16px 0 12px">
+      Wo steckt der <strong style="color:${color}">${lautLabel}</strong>-Laut im Wort?
+    </p>
+
+    <!-- Positions-Visualisierung -->
+    <div style="display:flex;gap:8px;justify-content:center;margin-bottom:20px;align-items:center">
+      <div style="flex:1;max-width:180px;height:6px;border-radius:3px;background:rgba(255,255,255,0.08);position:relative;overflow:visible">
+        <div id="posBar" style="position:absolute;inset:0;display:flex;gap:4px;padding:0 2px">
+          <div style="flex:1;border-radius:2px;background:rgba(255,255,255,0.15)" id="posBarVorn"></div>
+          <div style="flex:1;border-radius:2px;background:rgba(255,255,255,0.15)" id="posBarMitte"></div>
+          <div style="flex:1;border-radius:2px;background:rgba(255,255,255,0.15)" id="posBarEnde"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="answer-btns" style="gap:10px">
+      <button class="pos-btn" onclick="answerPosition('vorn', this)"
+        style="flex:1;min-width:80px;padding:14px 10px;border-radius:14px;border:2px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.07);color:white;font-family:'Fredoka One',cursive;font-size:1rem;cursor:pointer;transition:all 0.2s;letter-spacing:1px">
+        ⬅️ vorn
+      </button>
+      <button class="pos-btn" onclick="answerPosition('mitte', this)"
+        style="flex:1;min-width:80px;padding:14px 10px;border-radius:14px;border:2px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.07);color:white;font-family:'Fredoka One',cursive;font-size:1rem;cursor:pointer;transition:all 0.2s;letter-spacing:1px">
+        ↕️ Mitte
+      </button>
+      <button class="pos-btn" onclick="answerPosition('ende', this)"
+        style="flex:1;min-width:80px;padding:14px 10px;border-radius:14px;border:2px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.07);color:white;font-family:'Fredoka One',cursive;font-size:1rem;cursor:pointer;transition:all 0.2s;letter-spacing:1px">
+        ➡️ Ende
+      </button>
+    </div>
+
+    <div class="feedback hidden" id="feedback"></div>
+  `;
+
+  // Hover-Effekt für Buttons
+  document.querySelectorAll('.pos-btn').forEach(b => {
+    b.addEventListener('mouseenter', () => { if (!answered) b.style.background = 'rgba(255,255,255,0.16)'; });
+    b.addEventListener('mouseleave', () => { if (!answered) b.style.background = 'rgba(255,255,255,0.07)'; });
+  });
+
+  setTip('position');
+}
+
+function answerPosition(chosen, btn) {
+  if (answered) return;
+  answered = true;
+
+  const colorMap = { s: 'var(--s-color)', sch: 'var(--sch-color)', ch: 'var(--ch-color)', z: 'var(--z-color)' };
+  const color = colorMap[currentItem.type];
+  const correct = chosen === currentItem.position;
+
+  // Reveal word
+  document.getElementById('wordEl').style.filter = 'none';
+
+  // Animate position bar
+  const barIds = { vorn: 'posBarVorn', mitte: 'posBarMitte', ende: 'posBarEnde' };
+  const correctBar = document.getElementById(barIds[currentItem.position]);
+  if (correctBar) correctBar.style.background = color;
+
+  // Style all buttons
+  document.querySelectorAll('.pos-btn').forEach(b => {
+    b.disabled = true;
+    b.style.opacity = '0.5';
+  });
+
+  // Highlight correct button green, wrong red
+  const labels = { vorn: '⬅️ vorn', mitte: '↕️ Mitte', ende: '➡️ Ende' };
+  document.querySelectorAll('.pos-btn').forEach(b => {
+    const bPos = b.textContent.trim().toLowerCase().replace('⬅️ ', '').replace('↕️ ', '').replace('➡️ ', '');
+    if (bPos === currentItem.position) {
+      b.style.background = 'rgba(107,203,119,0.3)';
+      b.style.borderColor = 'var(--correct)';
+      b.style.opacity = '1';
+    }
+    if (b === btn && !correct) {
+      b.style.background = 'rgba(255,107,107,0.3)';
+      b.style.borderColor = 'var(--wrong)';
+      b.style.opacity = '1';
+    }
+  });
+
+  const fb = document.getElementById('feedback');
+  fb.classList.remove('hidden');
+
+  const posName = { vorn: 'am Anfang', mitte: 'in der Mitte', ende: 'am Ende' };
+  const lautLabel = currentItem.type.toUpperCase();
+
+  if (correct) {
+    score += 10;
+    correctCount++;
+    fb.className = 'feedback correct-fb';
+    fb.innerHTML = `✅ Richtig! Der <strong>${lautLabel}</strong>-Laut steckt <strong>${posName[currentItem.position]}</strong> von „${currentItem.word}". ${currentItem.lautschrift}`;
+  } else {
+    fb.className = 'feedback wrong-fb';
+    fb.innerHTML = `❌ Der <strong>${lautLabel}</strong>-Laut steckt <strong>${posName[currentItem.position]}</strong> von „${currentItem.word}" – nicht ${posName[chosen]}. ${currentItem.lautschrift}`;
+  }
+
+  roundLog.push({
+    emoji: currentItem.emoji,
+    word: currentItem.word,
+    artikel: currentItem.artikel,
+    lautschrift: currentItem.lautschrift,
+    laut: lautLabel,
+    correctAnswer: posName[currentItem.position],
+    givenAnswer: posName[chosen],
+    wasCorrect: correct,
+    mode: 'position',
+    question: `Wo steckt der ${lautLabel}-Laut?`
+  });
+
+  updateScoreboard();
+  setTip(currentItem.type);
+
+  setTimeout(() => { round++; renderGame(); }, 2400);
+}
+
+// ─── Results ─────────────────────────────────────────────────────────────────
+function showResults() {
+  const pct = Math.round((correctCount / TOTAL_ROUNDS) * 100);
+  let trophyEmoji, title, msg;
+  if (pct >= 80) { trophyEmoji = '🏆'; title = 'Fantastisch!'; msg = 'Du bist ein echter Laut-Zauberer!'; }
+  else if (pct >= 50) { trophyEmoji = '🌟'; title = 'Gut gemacht!'; msg = 'Noch etwas üben und du schaffst es!'; }
+  else { trophyEmoji = '💪'; title = 'Weiter so!'; msg = 'Übe regelmäßig – du wirst besser!'; }
+
+  // Build word review cards
+  const correctEntries = roundLog.filter(e => e.wasCorrect);
+  const wrongEntries   = roundLog.filter(e => !e.wasCorrect);
+
+  function entryCard(e, isCorrect) {
+    const border = isCorrect ? 'rgba(107,203,119,0.35)' : 'rgba(255,107,107,0.35)';
+    const bg     = isCorrect ? 'rgba(107,203,119,0.08)' : 'rgba(255,107,107,0.08)';
+    const icon   = isCorrect ? '✅' : '❌';
+
+    // Mode-specific detail line
+    let detail = '';
+    if (e.mode === 'identify') {
+      detail = isCorrect
+        ? `Laut <strong>${e.correctAnswer}</strong> erkannt`
+        : `Antwort: <strong>${e.givenAnswer}</strong> · Richtig: <strong>${e.correctAnswer}</strong>`;
+    } else if (e.mode === 'position') {
+      detail = isCorrect
+        ? `${e.laut}-Laut <strong>${e.correctAnswer}</strong> ${e.lautschrift}`
+        : `Antwort: <strong>${e.givenAnswer}</strong> · Richtig: <strong>${e.correctAnswer}</strong> ${e.lautschrift}`;
+    } else if (e.mode === 'fill') {
+      detail = isCorrect
+        ? `Richtiges Wort gewählt`
+        : `Antwort: <strong>${e.givenAnswer}</strong> · Richtig: <strong>${e.correctAnswer}</strong>`;
+    } else if (e.mode === 'sort') {
+      detail = isCorrect ? `Richtig einsortiert` : `Falsch einsortiert`;
+    }
+
+    return `
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;
+                  background:${bg};border:1px solid ${border};text-align:left">
+        <div style="font-size:1.8rem;flex-shrink:0">${e.emoji || '📝'}</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-family:'Fredoka One',cursive;font-size:1.05rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
+            ${icon} ${e.artikel ? e.artikel + ' ' : ''}${e.word || e.question || ''}
+          </div>
+          <div style="font-size:0.78rem;color:rgba(255,255,255,0.55);margin-top:2px">${detail}</div>
+        </div>
+      </div>`;
+  }
+
+  const correctHTML = correctEntries.length
+    ? correctEntries.map(e => entryCard(e, true)).join('')
+    : `<p style="color:rgba(255,255,255,0.35);font-size:0.9rem;text-align:center">Keine richtigen Antworten</p>`;
+
+  const wrongHTML = wrongEntries.length
+    ? wrongEntries.map(e => entryCard(e, false)).join('')
+    : `<p style="color:rgba(255,255,255,0.35);font-size:0.9rem;text-align:center">Keine Fehler – perfekt! 🎉</p>`;
+
+  document.getElementById('mainCard').innerHTML = `
+    <div class="result-screen">
+      <div class="result-emoji">${trophyEmoji}</div>
+      <div class="result-title">${title}</div>
+      <div class="result-score">${correctCount} von ${TOTAL_ROUNDS} richtig • ${score} Punkte</div>
+      <p style="color:rgba(255,255,255,0.6);margin-bottom:20px">${msg}</p>
+
+      <!-- Auswertungs-Tabs -->
+      <div style="display:flex;gap:8px;justify-content:center;margin-bottom:16px">
+        <button id="tabCorrect" onclick="switchTab('correct')"
+          style="font-family:'Nunito',sans-serif;font-weight:700;font-size:0.85rem;padding:7px 18px;border-radius:50px;
+                 border:2px solid var(--correct);background:rgba(107,203,119,0.2);color:var(--correct);cursor:pointer">
+          ✅ Richtig (${correctEntries.length})
+        </button>
+        <button id="tabWrong" onclick="switchTab('wrong')"
+          style="font-family:'Nunito',sans-serif;font-weight:700;font-size:0.85rem;padding:7px 18px;border-radius:50px;
+                 border:2px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.05);color:rgba(255,255,255,0.6);cursor:pointer">
+          ❌ Falsch (${wrongEntries.length})
+        </button>
+      </div>
+
+      <div id="panelCorrect" style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px;max-height:340px;overflow-y:auto;padding-right:2px">
+        ${correctHTML}
+      </div>
+      <div id="panelWrong" style="display:none;flex-direction:column;gap:8px;margin-bottom:20px;max-height:340px;overflow-y:auto;padding-right:2px">
+        ${wrongHTML}
+      </div>
+
+      <button class="restart-btn" onclick="restartGame()">🔄 Nochmal spielen</button>
+    </div>
+  `;
+}
+
+function switchTab(tab) {
+  const isCorrect = tab === 'correct';
+  document.getElementById('panelCorrect').style.display = isCorrect ? 'flex' : 'none';
+  document.getElementById('panelWrong').style.display   = isCorrect ? 'none' : 'flex';
+  document.getElementById('tabCorrect').style.background = isCorrect ? 'rgba(107,203,119,0.2)' : 'rgba(255,255,255,0.05)';
+  document.getElementById('tabCorrect').style.color      = isCorrect ? 'var(--correct)' : 'rgba(255,255,255,0.6)';
+  document.getElementById('tabCorrect').style.borderColor= isCorrect ? 'var(--correct)' : 'rgba(255,255,255,0.2)';
+  document.getElementById('tabWrong').style.background   = isCorrect ? 'rgba(255,255,255,0.05)' : 'rgba(255,107,107,0.2)';
+  document.getElementById('tabWrong').style.color        = isCorrect ? 'rgba(255,255,255,0.6)' : 'var(--wrong)';
+  document.getElementById('tabWrong').style.borderColor  = isCorrect ? 'rgba(255,255,255,0.2)' : 'var(--wrong)';
+}
+
+function restartGame() {
+  round = 0; score = 0; correctCount = 0; roundLog = [];
+  updateScoreboard();
+  renderGame();
+}
+
+// ─── Init ─────────────────────────────────────────────────────────────────────
+updateScoreboard();
+renderGame();
+</script>
+</body>
+</html>
