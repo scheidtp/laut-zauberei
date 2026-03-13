@@ -1,8 +1,8 @@
 # 🎙️ Laut-Zauberei
 
-**Logopädisches Sprachlernspiel für Kinder – trainiert die Laute S, SCH und CH**
+**Logopädisches Sprachlernspiel für Kinder – trainiert die Laute S, Z, SCH und CH**
 
-🌐 **[Jetzt spielen →](https://DEIN-USERNAME.github.io/laut-zauberei)**
+🌐 **[Jetzt spielen →](https://scheidtp.github.io/laut-zauberei)**
 
 ---
 
