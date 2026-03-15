@@ -611,11 +611,11 @@ const words = {
     { word: 'Dusche',     artikel: 'die', emoji: '🚿', hint: 'damit wäscht man sich',              lautschrift: '[Du-SCH-e]',      highlight: 'sch', position: 'mitte' },
     { word: 'Kirsche',    artikel: 'die', emoji: '🍒', hint: 'rote süße Frucht',                   lautschrift: '[Kir-SCH-e]',     highlight: 'sch', position: 'mitte' },
     { word: 'Rutsche',    artikel: 'die', emoji: '🛝', hint: 'Gerät auf dem Spielplatz',           lautschrift: '[Rut-SCH-e]',     highlight: 'sch', position: 'mitte' },
+    { word: 'Rauschen',   artikel: 'das', emoji: '🌊', hint: 'so hört sichströmendes Wassers an',  lautschrift: '[Rau-SCH-en]',    highlight: 'sch', position: 'mitte'  },
     // SCH am Ende
     { word: 'Fisch',      artikel: 'der', emoji: '🐟', hint: 'Tier im Wasser mit Flossen',         lautschrift: '[Fi-SCH]',        highlight: 'sch', position: 'ende' },
     { word: 'Tisch',      artikel: 'der', emoji: '🪑', hint: 'darauf stellt man Teller',           lautschrift: '[Ti-SCH]',        highlight: 'sch', position: 'ende'  },
     { word: 'Wunsch',     artikel: 'der', emoji: '⭐', hint: 'etwas das man sich erhofft',         lautschrift: '[Wun-SCH]',       highlight: 'sch', position: 'ende'  },
-    { word: 'Rausch',     artikel: 'der', emoji: '🌊', hint: 'lautes Rauschen des Wassers',        lautschrift: '[Rau-SCH]',       highlight: 'sch', position: 'ende'  },
     { word: 'Mensch',     artikel: 'der', emoji: '🧍🏻', hint: 'kann denken und sprechen',           lautschrift: '[Men-SCH]',       highlight: 'sch', position: 'ende'  },
   ],
   ch: [
@@ -625,7 +625,8 @@ const words = {
     { word: 'Kochen',  artikel: 'das', emoji: '👨‍🍳',hint: 'Essen zubereiten',               lautschrift: '[Ko-CH-en]',   highlight: 'ch', position: 'mitte' },
     { word: 'Mädchen', artikel: 'das', emoji: '👧', hint: 'weibliches Kind',               lautschrift: '[Mäd-CH-en]',  highlight: 'ch', position: 'mitte' },
     { word: 'Kirche',  artikel: 'die', emoji: '⛪', hint: 'Gebäude mit Turm und Glocke',   lautschrift: '[Kir-CH-e]',   highlight: 'ch', position: 'mitte' },
-    { word: 'Suche',   artikel: 'die', emoji: '🔍', hint: 'wenn man etwas sucht',          lautschrift: '[Su-CH-e]',    highlight: 'ch', position: 'mitte' },
+    { word: 'Suche',   artikel: 'die', emoji: '🔍', hint: 'wenn man etwas sucht',          lautschrift: '[Su-CH-e]',    highlight: 'ch', position: 'mitte',
+      alsoValidAs: [{ type: 's', highlight: 'S', position: 'vorn' }] },
     { word: 'Becher',  artikel: 'der', emoji: '🥤', hint: 'Trinkgefäß ohne Henkel',        lautschrift: '[Be-CH-er]',   highlight: 'ch', position: 'mitte' },
     { word: 'Brechen', artikel: 'das', emoji: '💥', hint: 'wenn etwas kaputt geht',        lautschrift: '[Bre-CH-en]',  highlight: 'ch', position: 'mitte' },
     { word: 'Weiche',  artikel: 'die', emoji: '🚂', hint: 'lenkt Züge auf andere Gleise',  lautschrift: '[Wei-CH-e]',   highlight: 'ch', position: 'mitte' },
@@ -1018,15 +1019,16 @@ function renderSort() {
     ['s','sch','ch','z'].forEach(type => {
       bins[type].forEach(w => {
         total++;
-        const wasCorrect = w.type === type;
+        const validTypes = [w.type, ...(w.alsoValidAs || []).map(a => a.type)];
+        const wasCorrect = validTypes.includes(type);
         if (wasCorrect) correct++;
         roundLog.push({
           emoji: w.emoji,
           word: w.word,
           artikel: w.artikel,
           lautschrift: w.lautschrift,
-          laut: w.type.toUpperCase(),
-          correctAnswer: w.type.toUpperCase(),
+          laut: validTypes.map(t => t.toUpperCase()).join('/'),
+          correctAnswer: validTypes.map(t => t.toUpperCase()).join('/'),
           givenAnswer: type.toUpperCase(),
           wasCorrect,
           mode: 'sort',
