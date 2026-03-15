@@ -158,6 +158,20 @@
     margin: 10px 0 30px;
   }
 
+  .emoji-display {
+    font-size: clamp(4rem, 18vw, 7rem);
+    line-height: 1;
+    margin-bottom: 10px;
+    display: block;
+    filter: drop-shadow(0 4px 16px rgba(0,0,0,0.4));
+    animation: emojiPop 0.35s cubic-bezier(0.34,1.56,0.64,1) both;
+  }
+
+  @keyframes emojiPop {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
   .big-word {
     font-family: 'Fredoka One', cursive;
     font-size: clamp(2.5rem, 12vw, 5rem);
@@ -259,17 +273,18 @@
 
   .sort-word {
     font-family: 'Fredoka One', cursive;
-    font-size: 1.3rem;
-    padding: 8px 18px;
-    border-radius: 50px;
+    padding: 10px 14px;
+    border-radius: 16px;
     background: rgba(255,255,255,0.1);
     border: 2px solid rgba(255,255,255,0.2);
     cursor: pointer;
     transition: all 0.2s;
     user-select: none;
+    text-align: center;
+    min-width: 72px;
   }
 
-  .sort-word:hover { transform: scale(1.05); background: rgba(255,255,255,0.18); }
+  .sort-word:hover { transform: scale(1.07); background: rgba(255,255,255,0.18); }
 
   .sort-bins {
     display: flex;
@@ -539,22 +554,22 @@ const words = {
     { word: 'Sonne',    artikel: 'die', emoji: '☀️',  hint: 'leuchtet am Himmel',              lautschrift: '[S-o-n-e]',     highlight: 'S',  position: 'vorn'  },
     { word: 'Seife',    artikel: 'die', emoji: '🧼',  hint: 'zum Händewaschen',                lautschrift: '[S-ei-fe]',     highlight: 'S',  position: 'vorn'  },
     { word: 'Salz',     artikel: 'das', emoji: '🧂',  hint: 'macht Essen würzig',              lautschrift: '[S-alz]',       highlight: 'S',  position: 'vorn'  },
-    { word: 'Socke',    artikel: 'die', emoji: '🧦',  hint: 'trägst du am Fuß',               lautschrift: '[S-o-cke]',     highlight: 'S',  position: 'vorn'  },
+    { word: 'Socke',    artikel: 'die', emoji: '🧦',  hint: 'trägst du am Fuß',                lautschrift: '[S-o-cke]',     highlight: 'S',  position: 'vorn'  },
     { word: 'Suppe',    artikel: 'die', emoji: '🍲',  hint: 'warmes Gericht zum Löffeln',      lautschrift: '[S-u-ppe]',     highlight: 'S',  position: 'vorn'  },
-    { word: 'Säge',     artikel: 'die', emoji: '🪚',  hint: 'Werkzeug zum Holzsägen',          lautschrift: '[S-ä-ge]',      highlight: 'S',  position: 'vorn'  },
+    { word: 'Säge',     artikel: 'die', emoji: '🪚',  hint: 'Holzwerkzeug',                    lautschrift: '[S-ä-ge]',      highlight: 'S',  position: 'vorn'  },
     { word: 'Saft',     artikel: 'der', emoji: '🥤',  hint: 'leckeres Getränk aus Früchten',   lautschrift: '[S-aft]',       highlight: 'S',  position: 'vorn'  },
-    { word: 'Seil',     artikel: 'das', emoji: '🪢',  hint: 'zum Klettern oder Binden',        lautschrift: '[S-eil]',       highlight: 'S',  position: 'vorn'  },
-    { word: 'Sofa',     artikel: 'das', emoji: '🛋️', hint: 'bequemes Sitzmöbel',              lautschrift: '[S-o-fa]',      highlight: 'S',  position: 'vorn'  },
+    { word: 'Seil',     artikel: 'das', emoji: '🪢',  hint: 'zum Klettern oder Festbinden',    lautschrift: '[S-eil]',       highlight: 'S',  position: 'vorn'  },
+    { word: 'Sofa',     artikel: 'das', emoji: '🛋️',  hint: 'bequemes Sitzmöbel',              lautschrift: '[S-o-fa]',      highlight: 'S',  position: 'vorn'  },
     { word: 'Sieb',     artikel: 'das', emoji: '🫙',  hint: 'Küchengerät mit kleinen Löchern', lautschrift: '[S-ieb]',       highlight: 'S',  position: 'vorn'  },
-    { word: 'Sack',     artikel: 'der', emoji: '🎒',  hint: 'großer Beutel',                   lautschrift: '[S-ack]',       highlight: 'S',  position: 'vorn'  },
     { word: 'Segel',    artikel: 'das', emoji: '⛵',  hint: 'fängt den Wind auf dem Boot',     lautschrift: '[S-e-gel]',     highlight: 'S',  position: 'vorn'  },
-    { word: 'Sense',    artikel: 'die', emoji: '🌾',  hint: 'Werkzeug zum Mähen',              lautschrift: '[S-en-se]',     highlight: 'S',  position: 'vorn'  },
+    { word: 'Sense',    artikel: 'die', emoji: '🌾',  hint: 'Werkzeug zum Grasschneiden',      lautschrift: '[S-en-se]',     highlight: 'S',  position: 'vorn'  },
     // S in der Mitte
-    { word: 'Nase',     artikel: 'die', emoji: '👃',  hint: 'damit riecht man',                lautschrift: '[Na-S-e]',      highlight: 's',  position: 'mitte' },
-    { word: 'Hose',     artikel: 'die', emoji: '👖',  hint: 'Kleidungsstück für die Beine',    lautschrift: '[Ho-S-e]',      highlight: 's',  position: 'mitte' },
-    { word: 'Wiese',    artikel: 'die', emoji: '🌿',  hint: 'grüne Grasfläche',                lautschrift: '[Wi-S-e]',      highlight: 's',  position: 'mitte' },
-    { word: 'Esel',     artikel: 'der', emoji: '🫏',  hint: 'Tier mit langen Ohren',           lautschrift: '[E-S-el]',      highlight: 's',  position: 'mitte' },
-    { word: 'Besen',    artikel: 'der', emoji: '🧹',  hint: 'zum Fegen des Bodens',            lautschrift: '[Be-S-en]',     highlight: 's',  position: 'mitte' },
+    { word: 'Nase',     artikel: 'die', emoji: '👃',  hint: 'damit riecht man',                  lautschrift: '[Na-S-e]',      highlight: 's',  position: 'mitte' },
+    { word: 'Hose',     artikel: 'die', emoji: '👖',  hint: 'Kleidungsstück für die Beine',      lautschrift: '[Ho-S-e]',      highlight: 's',  position: 'mitte' },
+    { word: 'Wiese',    artikel: 'die', emoji: '🌿',  hint: 'grüne Grasfläche',                  lautschrift: '[Wi-S-e]',      highlight: 's',  position: 'mitte' },
+    { word: 'Esel',     artikel: 'der', emoji: '🫏',  hint: 'störrisches Tier mit langen Ohren', lautschrift: '[E-S-el]',      highlight: 's',  position: 'mitte' },
+    { word: 'Besen',    artikel: 'der', emoji: '🧹',  hint: 'zum Fegen des Bodens',              lautschrift: '[Be-S-en]',     highlight: 's',  position: 'mitte' },
+    { word: 'Rucksack', artikel: 'der', emoji: '🎒',  hint: 'Beutel auf dem Rücken',             lautschrift: '[Ruck-S-ack]',  highlight: 's',  position: 'mitte'  },
     // S am Ende
     { word: 'Haus',     artikel: 'das', emoji: '🏡',  hint: 'darin wohnt man',                 lautschrift: '[Hau-S]',       highlight: 's',  position: 'ende'  },
     { word: 'Maus',     artikel: 'die', emoji: '🐭',  hint: 'kleines Tier mit langer Schwanz', lautschrift: '[Mau-S]',       highlight: 's',  position: 'ende'  },
@@ -564,7 +579,7 @@ const words = {
   sch: [
     // SCH vorn – geschrieben als "sch"
     { word: 'Schaf',        artikel: 'das', emoji: '🐑', hint: 'Tier mit dicker Wolle',             lautschrift: '[SCH-af]',         highlight: 'Sch',  position: 'vorn'  },
-    { word: 'Schule',       artikel: 'die', emoji: '🏫', hint: 'Gebäude wo Kinder lernen',           lautschrift: '[SCH-u-le]',       highlight: 'Sch',  position: 'vorn'  },
+    { word: 'Schule',       artikel: 'die', emoji: '🏫', hint: 'Gebäude in dem Kinder lernen',      lautschrift: '[SCH-u-le]',       highlight: 'Sch',  position: 'vorn'  },
     { word: 'Schuh',        artikel: 'der', emoji: '👟', hint: 'trägst du am Fuß',                  lautschrift: '[SCH-uh]',         highlight: 'Sch',  position: 'vorn'  },
     { word: 'Schere',       artikel: 'die', emoji: '✂️', hint: 'zum Schneiden von Papier',          lautschrift: '[SCH-e-re]',       highlight: 'Sch',  position: 'vorn'  },
     { word: 'Schwein',      artikel: 'das', emoji: '🐷', hint: 'rosarotes Tier auf dem Bauernhof',  lautschrift: '[SCH-w-ein]',      highlight: 'Schw', position: 'vorn'  },
@@ -576,51 +591,52 @@ const words = {
     { word: 'Schloss',      artikel: 'das', emoji: '🏰', hint: 'großes altes Gebäude',              lautschrift: '[SCH-loss]',       highlight: 'Schl', position: 'vorn'  },
     { word: 'Schaukel',     artikel: 'die', emoji: '🪀', hint: 'damit kann man schaukeln',          lautschrift: '[SCH-au-kel]',     highlight: 'Sch',  position: 'vorn'  },
     // SCH vorn – "st" und "sp" am Wortanfang
-    { word: 'Stein',    artikel: 'der', emoji: '🪨', hint: 'liegt auf der Erde – beginnt wie SCH!',    lautschrift: '[SCH-t-ein]',    highlight: 'St', position: 'vorn' },
-    { word: 'Stern',    artikel: 'der', emoji: '⭐', hint: 'leuchtet nachts am Himmel – beginnt wie SCH!',lautschrift: '[SCH-t-ern]', highlight: 'St', position: 'vorn' },
-    { word: 'Stiefel',  artikel: 'der', emoji: '🥾', hint: 'hoher Schuh – beginnt wie SCH!',           lautschrift: '[SCH-t-ie-fel]', highlight: 'St', position: 'vorn' },
-    { word: 'Stuhl',    artikel: 'der', emoji: '🪑', hint: 'darauf kann man sitzen – beginnt wie SCH!', lautschrift: '[SCH-t-uhl]',   highlight: 'St', position: 'vorn' },
-    { word: 'Spinne',   artikel: 'die', emoji: '🕷️', hint: 'Tier mit acht Beinen – beginnt wie SCH!',  lautschrift: '[SCH-p-i-nne]', highlight: 'Sp', position: 'vorn' },
-    { word: 'Spiel',    artikel: 'das', emoji: '🎮', hint: 'macht viel Spaß – beginnt wie SCH!',        lautschrift: '[SCH-p-iel]',   highlight: 'Sp', position: 'vorn' },
-    { word: 'Spiegel',  artikel: 'der', emoji: '🪞', hint: 'darin siehst du dich – beginnt wie SCH!',   lautschrift: '[SCH-p-ie-gel]',highlight: 'Sp', position: 'vorn' },
+    { word: 'Stein',    artikel: 'der', emoji: '🪨', hint: 'hartes Ding liegt auf der Erde',        lautschrift: '[SCH-t-ein]',    highlight: 'St', position: 'vorn' },
+    { word: 'Stern',    artikel: 'der', emoji: '⭐', hint: 'leuchtet nachts am Himmel',             lautschrift: '[SCH-t-ern]',    highlight: 'St', position: 'vorn' },
+    { word: 'Stiefel',  artikel: 'der', emoji: '🥾', hint: 'hoher Schuh',                           lautschrift: '[SCH-t-ie-fel]', highlight: 'St', position: 'vorn' },
+    { word: 'Stuhl',    artikel: 'der', emoji: '🪑', hint: 'darauf kann man sitzen',                lautschrift: '[SCH-t-uhl]',    highlight: 'St', position: 'vorn' },
+    { word: 'Spinne',   artikel: 'die', emoji: '🕷️', hint: 'Tier mit acht Beinen',                  lautschrift: '[SCH-p-i-nne]',  highlight: 'Sp', position: 'vorn' },
+    { word: 'Spiel',    artikel: 'das', emoji: '🎮', hint: 'macht viel Spaß',                       lautschrift: '[SCH-p-iel]',    highlight: 'Sp', position: 'vorn' },
+    { word: 'Spiegel',  artikel: 'der', emoji: '🪞', hint: 'darin siehst du dich',                  lautschrift: '[SCH-p-ie-gel]', highlight: 'Sp', position: 'vorn' },
     // SCH in der Mitte
-    { word: 'Fisch',      artikel: 'der', emoji: '🐟', hint: 'Tier im Wasser mit Flossen',        lautschrift: '[Fi-SCH]',        highlight: 'sch', position: 'mitte' },
+    { word: 'Fisch',      artikel: 'der', emoji: '🐟', hint: 'Tier im Wasser mit Flossen',         lautschrift: '[Fi-SCH]',        highlight: 'sch', position: 'mitte' },
     { word: 'Tisch',      artikel: 'der', emoji: '🪑', hint: 'Möbel zum Essen und Arbeiten',       lautschrift: '[Ti-SCH]',        highlight: 'sch', position: 'mitte' },
     { word: 'Tasche',     artikel: 'die', emoji: '👜', hint: 'darin trägt man Sachen',             lautschrift: '[Ta-SCH-e]',      highlight: 'sch', position: 'mitte' },
-    { word: 'Wäsche',     artikel: 'die', emoji: '👕', hint: 'Kleidung zum Waschen',               lautschrift: '[Wä-SCH-e]',      highlight: 'sch', position: 'mitte' },
+    { word: 'Wäsche',     artikel: 'die', emoji: '👕', hint: 'anderes Wort für Kleidung',          lautschrift: '[Wä-SCH-e]',      highlight: 'sch', position: 'mitte' },
     { word: 'Dusche',     artikel: 'die', emoji: '🚿', hint: 'damit wäscht man sich',              lautschrift: '[Du-SCH-e]',      highlight: 'sch', position: 'mitte' },
     { word: 'Kirsche',    artikel: 'die', emoji: '🍒', hint: 'rote süße Frucht',                   lautschrift: '[Kir-SCH-e]',     highlight: 'sch', position: 'mitte' },
+    { word: 'Rutsche',    artikel: 'die', emoji: '🛝', hint: 'Gerät auf dem Spielplatz',           lautschrift: '[Rut-SCH-e]',     highlight: 'sch', position: 'mitte' },
     // SCH am Ende
     { word: 'Tisch',      artikel: 'der', emoji: '🪑', hint: 'darauf stellt man Teller',           lautschrift: '[Ti-SCH]',        highlight: 'sch', position: 'ende'  },
     { word: 'Wunsch',     artikel: 'der', emoji: '⭐', hint: 'etwas das man sich erhofft',         lautschrift: '[Wun-SCH]',       highlight: 'sch', position: 'ende'  },
     { word: 'Busch',      artikel: 'der', emoji: '🌿', hint: 'kleiner Strauch',                    lautschrift: '[Bu-SCH]',        highlight: 'sch', position: 'ende'  },
     { word: 'Rausch',     artikel: 'der', emoji: '🌊', hint: 'lautes Rauschen des Wassers',        lautschrift: '[Rau-SCH]',       highlight: 'sch', position: 'ende'  },
+    { word: 'Mensch',     artikel: 'der', emoji: '🧍🏻', hint: 'kann denken und sprechen',           lautschrift: '[Men-SCH]',       highlight: 'sch', position: 'ende'  },
   ],
   ch: [
     // CH in der Mitte – Ach-Laut
-    { word: 'Kuchen',  artikel: 'der', emoji: '🎂', hint: 'süßes Gebäck – Ach-Laut',                lautschrift: '[Ku-CH-en]',   highlight: 'ch', position: 'mitte' },
-    { word: 'Lachen',  artikel: 'das', emoji: '😂', hint: 'wenn etwas lustig ist – Ach-Laut',        lautschrift: '[La-CH-en]',   highlight: 'ch', position: 'mitte' },
-    { word: 'Kochen',  artikel: 'das', emoji: '👨‍🍳',hint: 'Essen zubereiten – Ach-Laut',           lautschrift: '[Ko-CH-en]',   highlight: 'ch', position: 'mitte' },
-    { word: 'Mädchen', artikel: 'das', emoji: '👧', hint: 'weibliches Kind – Ich-Laut',              lautschrift: '[Mäd-CH-en]',  highlight: 'ch', position: 'mitte' },
-    { word: 'Büchse',  artikel: 'die', emoji: '🥫', hint: 'Dose aus Metall – Ich-Laut',              lautschrift: '[Büch-se]',    highlight: 'ch', position: 'mitte' },
-    { word: 'Kirche',  artikel: 'die', emoji: '⛪', hint: 'Gebäude mit Turm und Glocke – Ich-Laut',  lautschrift: '[Kir-CH-e]',   highlight: 'ch', position: 'mitte' },
-    { word: 'Suche',   artikel: 'die', emoji: '🔍', hint: 'wenn man etwas sucht – Ich-Laut',         lautschrift: '[Su-CH-e]',    highlight: 'ch', position: 'mitte' },
-    { word: 'Becher',  artikel: 'der', emoji: '🥤', hint: 'Trinkgefäß ohne Henkel – Ich-Laut',       lautschrift: '[Be-CH-er]',   highlight: 'ch', position: 'mitte' },
-    { word: 'Brechen', artikel: 'das', emoji: '💥', hint: 'wenn etwas kaputt geht – Ich-Laut',        lautschrift: '[Bre-CH-en]',  highlight: 'ch', position: 'mitte' },
-    { word: 'Weiche',  artikel: 'die', emoji: '🚂', hint: 'lenkt Züge auf andere Gleise – Ich-Laut', lautschrift: '[Wei-CH-e]',   highlight: 'ch', position: 'mitte' },
+    { word: 'Kuchen',  artikel: 'der', emoji: '🎂', hint: 'süßes Gebäck',                  lautschrift: '[Ku-CH-en]',   highlight: 'ch', position: 'mitte' },
+    { word: 'Lachen',  artikel: 'das', emoji: '😂', hint: 'wenn etwas lustig ist',         lautschrift: '[La-CH-en]',   highlight: 'ch', position: 'mitte' },
+    { word: 'Kochen',  artikel: 'das', emoji: '👨‍🍳',hint: 'Essen zubereiten',               lautschrift: '[Ko-CH-en]',   highlight: 'ch', position: 'mitte' },
+    { word: 'Mädchen', artikel: 'das', emoji: '👧', hint: 'weibliches Kind',               lautschrift: '[Mäd-CH-en]',  highlight: 'ch', position: 'mitte' },
+    { word: 'Kirche',  artikel: 'die', emoji: '⛪', hint: 'Gebäude mit Turm und Glocke',   lautschrift: '[Kir-CH-e]',   highlight: 'ch', position: 'mitte' },
+    { word: 'Suche',   artikel: 'die', emoji: '🔍', hint: 'wenn man etwas sucht',          lautschrift: '[Su-CH-e]',    highlight: 'ch', position: 'mitte' },
+    { word: 'Becher',  artikel: 'der', emoji: '🥤', hint: 'Trinkgefäß ohne Henkel',        lautschrift: '[Be-CH-er]',   highlight: 'ch', position: 'mitte' },
+    { word: 'Brechen', artikel: 'das', emoji: '💥', hint: 'wenn etwas kaputt geht',        lautschrift: '[Bre-CH-en]',  highlight: 'ch', position: 'mitte' },
+    { word: 'Weiche',  artikel: 'die', emoji: '🚂', hint: 'lenkt Züge auf andere Gleise',  lautschrift: '[Wei-CH-e]',   highlight: 'ch', position: 'mitte' },
     // CH am Ende – Ach-Laut
-    { word: 'Buch',    artikel: 'das', emoji: '📚', hint: 'zum Lesen – Ach-Laut',                    lautschrift: '[Bu-CH]',      highlight: 'ch', position: 'ende'  },
-    { word: 'Nacht',   artikel: 'die', emoji: '🌙', hint: 'wenn es dunkel ist – Ach-Laut',            lautschrift: '[Na-CH-t]',    highlight: 'ch', position: 'ende'  },
-    { word: 'Dach',    artikel: 'das', emoji: '🏠', hint: 'oben am Haus – Ach-Laut',                  lautschrift: '[Da-CH]',      highlight: 'ch', position: 'ende'  },
-    { word: 'Bauch',   artikel: 'der', emoji: '🫃', hint: 'Körperteil am Rumpf – Ach-Laut',           lautschrift: '[Bau-CH]',     highlight: 'ch', position: 'ende'  },
-    { word: 'Loch',    artikel: 'das', emoji: '🕳️',hint: 'Öffnung in der Erde – Ach-Laut',           lautschrift: '[Lo-CH]',      highlight: 'ch', position: 'ende'  },
-    { word: 'Koch',    artikel: 'der', emoji: '👨‍🍳',hint: 'bereitet Essen zu – Ach-Laut',           lautschrift: '[Ko-CH]',      highlight: 'ch', position: 'ende'  },
-    { word: 'Tuch',    artikel: 'das', emoji: '🧣', hint: 'weiches Stück Stoff – Ach-Laut',           lautschrift: '[Tu-CH]',      highlight: 'ch', position: 'ende'  },
-    { word: 'Fach',    artikel: 'das', emoji: '📂', hint: 'Abteil in einem Schrank – Ach-Laut',       lautschrift: '[Fa-CH]',      highlight: 'ch', position: 'ende'  },
+    { word: 'Buch',    artikel: 'das', emoji: '📚', hint: 'zum Lesen',                     lautschrift: '[Bu-CH]',      highlight: 'ch', position: 'ende'  },
+    { word: 'Nacht',   artikel: 'die', emoji: '🌙', hint: 'wenn es dunkel ist',            lautschrift: '[Na-CH-t]',    highlight: 'ch', position: 'ende'  },
+    { word: 'Dach',    artikel: 'das', emoji: '🏠', hint: 'oben am Haus',                  lautschrift: '[Da-CH]',      highlight: 'ch', position: 'ende'  },
+    { word: 'Bauch',   artikel: 'der', emoji: '🫃', hint: 'Körperteil am Rumpf',           lautschrift: '[Bau-CH]',     highlight: 'ch', position: 'ende'  },
+    { word: 'Loch',    artikel: 'das', emoji: '🕳️',hint: 'Öffnung in der Erde',            lautschrift: '[Lo-CH]',      highlight: 'ch', position: 'ende'  },
+    { word: 'Koch',    artikel: 'der', emoji: '👨‍🍳',hint: 'bereitet Essen zu',              lautschrift: '[Ko-CH]',      highlight: 'ch', position: 'ende'  },
+    { word: 'Tuch',    artikel: 'das', emoji: '🧣', hint: 'weiches Stück Stoff',           lautschrift: '[Tu-CH]',      highlight: 'ch', position: 'ende'  },
+    { word: 'Fach',    artikel: 'das', emoji: '📂', hint: 'Abteil in einem Schrank',       lautschrift: '[Fa-CH]',      highlight: 'ch', position: 'ende'  },
     // CH am Ende – Ich-Laut
-    { word: 'Milch',   artikel: 'die', emoji: '🥛', hint: 'weißes Getränk von der Kuh – Ich-Laut',   lautschrift: '[Mil-CH]',     highlight: 'ch', position: 'ende'  },
-    { word: 'Pech',    artikel: 'das', emoji: '😬', hint: 'wenn man Unglück hat – Ich-Laut',          lautschrift: '[Pe-CH]',      highlight: 'ch', position: 'ende'  },
-    { word: 'Storch',  artikel: 'der', emoji: '🦢', hint: 'großer weißer Vogel – Ach-Laut',           lautschrift: '[Stor-CH]',    highlight: 'ch', position: 'ende'  },
+    { word: 'Milch',   artikel: 'die', emoji: '🥛', hint: 'weißes Getränk von der Kuh',    lautschrift: '[Mil-CH]',     highlight: 'ch', position: 'ende'  },
+    { word: 'Pech',    artikel: 'das', emoji: '😬', hint: 'wenn man Unglück hat',          lautschrift: '[Pe-CH]',      highlight: 'ch', position: 'ende'  },
+    { word: 'Storch',  artikel: 'der', emoji: '🦢', hint: 'großer weißer Wasservogel',     lautschrift: '[Stor-CH]',    highlight: 'ch', position: 'ende'  }
   ]
 };
 
@@ -641,19 +657,20 @@ words.z = [
   { word: 'Zopf',    artikel: 'der', emoji: '👱', hint: 'geflochtene Haare',               lautschrift: '[Z-opf]',       highlight: 'Z',  position: 'vorn'  },
   // Z in der Mitte (tz / z)
   { word: 'Katze',   artikel: 'die', emoji: '🐱', hint: 'beliebtes Haustier',              lautschrift: '[Ka-TZ-e]',     highlight: 'tz', position: 'mitte' },
-  { word: 'Kerze',   artikel: 'die', emoji: '🕯️',hint: 'leuchtet mit Flamme',             lautschrift: '[Ker-Z-e]',     highlight: 'z',  position: 'mitte' },
+  { word: 'Kerze',   artikel: 'die', emoji: '🕯️', hint: 'leuchtet mit Flamme',             lautschrift: '[Ker-Z-e]',     highlight: 'z',  position: 'mitte' },
   { word: 'Mütze',   artikel: 'die', emoji: '🧢', hint: 'Kopfbedeckung',                   lautschrift: '[Mü-TZ-e]',     highlight: 'tz', position: 'mitte' },
   { word: 'Wurzel',  artikel: 'die', emoji: '🌱', hint: 'wächst unter der Erde',           lautschrift: '[Wur-Z-el]',    highlight: 'z',  position: 'mitte' },
   { word: 'Pfütze',  artikel: 'die', emoji: '💧', hint: 'Wasserlache nach dem Regen',      lautschrift: '[Pfü-TZ-e]',    highlight: 'tz', position: 'mitte' },
-  { word: 'Netz',    artikel: 'das', emoji: '🕸️',hint: 'zum Fangen von Fischen',          lautschrift: '[Ne-TZ]',       highlight: 'tz', position: 'mitte' },
   { word: 'Tatze',   artikel: 'die', emoji: '🐾', hint: 'Pfote eines Tieres',              lautschrift: '[Ta-TZ-e]',     highlight: 'tz', position: 'mitte' },
+  { word: 'Brezel',  artikel: 'die', emoji: '🥨', hint: 'Gebäck mit Knoten',               lautschrift: '[Bre-TZ-el]',   highlight: 'tz', position: 'mitte' },
   // Z am Ende (z / tz)
   { word: 'Sitz',    artikel: 'der', emoji: '💺', hint: 'Platz zum Hinsetzen',             lautschrift: '[Si-TZ]',       highlight: 'tz', position: 'ende'  },
+  { word: 'Netz',    artikel: 'das', emoji: '🕸️', hint: 'zum Fangen von Fischen',          lautschrift: '[Ne-TZ]',       highlight: 'tz', position: 'ende'  },
   { word: 'Witz',    artikel: 'der', emoji: '😄', hint: 'macht Leute lachen',              lautschrift: '[Wi-TZ]',       highlight: 'tz', position: 'ende'  },
   { word: 'Schatz',  artikel: 'der', emoji: '💎', hint: 'wertvoller Fund',                 lautschrift: '[Scha-TZ]',     highlight: 'tz', position: 'ende'  },
   { word: 'Pelz',    artikel: 'der', emoji: '🦊', hint: 'weiches Tierfell',                lautschrift: '[Pel-Z]',       highlight: 'z',  position: 'ende'  },
   { word: 'Pilz',    artikel: 'der', emoji: '🍄', hint: 'wächst im Wald',                  lautschrift: '[Pil-Z]',       highlight: 'z',  position: 'ende'  },
-  { word: 'Kreuz',   artikel: 'das', emoji: '✝️', hint: 'Form mit zwei Linien',            lautschrift: '[Kreu-Z]',      highlight: 'z',  position: 'ende'  },
+  { word: 'Kreuz',   artikel: 'das', emoji: '✝️', hint: 'Form mit zwei Linien',            lautschrift: '[Kreu-Z]',      highlight: 'z',  position: 'ende'  }
 ];
 
 // Artikel-Hilfsfunktion: bestimmter Artikel im Nominativ
@@ -663,38 +680,45 @@ function artDefCap(w) { return w.artikel.charAt(0).toUpperCase() + w.artikel.sli
 
 const fillQuestions = [
   // S-Laute
-  { sentence: 'Die ____ scheint heute besonders hell.', options: ['Sonne ☀️', 'Schule 🏫', 'Kirche ⛪'], answer: 0, sound: 's' },
-  { sentence: 'Ich wasche meine Hände mit der ____.', options: ['Seife 🧼', 'Schere ✂️', 'Milch 🥛'], answer: 0, sound: 's' },
-  { sentence: 'Papa trinkt einen Glas ____ zum Frühstück.', options: ['Saft 🥤', 'Schiff 🚢', 'Buch 📚'], answer: 0, sound: 's' },
-  { sentence: 'Ich sitze gemütlich auf dem ____.', options: ['Sofa 🛋️', 'Schuh 👟', 'Dach 🏠'], answer: 0, sound: 's' },
-  { sentence: 'Das ____ hängt an der Kletterwand.', options: ['Säge 🪚', 'Seil 🪢', 'Schere ✂️'], answer: 1, sound: 's' },
+  { sentence: 'Die ____ scheint heute besonders hell.',      options: ['Sonne ☀️', 'Schule 🏫', 'Kirche ⛪'],    answer: 0, sound: 's' },
+  { sentence: 'Ich wasche meine Hände mit der ____.',        options: ['Seife 🧼', 'Schere ✂️', 'Milch 🥛'],     answer: 0, sound: 's' },
+  { sentence: 'Papa trinkt einen Glas ____ zum Frühstück.',  options: ['Saft 🥤', 'Schiff 🚢', 'Buch 📚'],       answer: 0, sound: 's' },
+  { sentence: 'Ich sitze gemütlich auf dem ____.',           options: ['Sofa 🛋️', 'Schuh 👟', 'Dach 🏠'],        answer: 0, sound: 's' },
+  { sentence: 'Eine ____ ist ganz schön stark.',             options: ['Ameise 🐜', 'Schnecke 🐌', 'Katze 🐱'],  answer: 0, sound: 's' },
+  { sentence: 'Das ____ hängt an der Kletterwand.',          options: ['Säge 🪚', 'Seil 🪢', 'Schere ✂️'],       answer: 1, sound: 's' },
   // SCH-Laute
-  { sentence: 'Das ____ blökt laut auf der Wiese.', options: ['Sofa 🛋️', 'Buch 📚', 'Schaf 🐑'], answer: 2, sound: 'sch' },
-  { sentence: 'Das ____ fährt über das Meer.', options: ['Schiff 🚢', 'Saft 🥤', 'Tuch 🧣'], answer: 0, sound: 'sch' },
-  { sentence: 'Mama schneidet Papier mit der ____.', options: ['Suppe 🍲', 'Schere ✂️', 'Nacht 🌙'], answer: 1, sound: 'sch' },
-  { sentence: 'Die ____ kriecht ganz langsam über den Weg.', options: ['Sonne ☀️', 'Socke 🧦', 'Schnecke 🐌'], answer: 2, sound: 'sch' },
-  { sentence: 'Der ____ liegt auf dem Spielplatz.', options: ['Schuh 👟', 'Stein 🪨', 'Kuchen 🎂'], answer: 1, sound: 'sch',
+  { sentence: 'Das ____ blökt laut auf der Wiese.',          options: ['Sofa 🛋️', 'Buch 📚', 'Schaf 🐑'],        answer: 2, sound: 'sch' },
+  { sentence: 'Das ____ hat einen Ringelschwanz.',           options: ['Schaf 🐑', 'Zebra 🦓', 'Schwein 🐖'],    answer: 2, sound: 'sch' },
+  { sentence: 'Das ____ fährt über das Meer.',               options: ['Schiff 🚢', 'Saft 🥤', 'Tuch 🧣'],       answer: 0, sound: 'sch' },
+  { sentence: 'Mama schneidet Papier mit der ____.',         options: ['Suppe 🍲', 'Schere ✂️', 'Nacht 🌙'],     answer: 1, sound: 'sch' },
+  { sentence: 'Die ____ kriecht ganz langsam über den Weg.', options: ['Sonne ☀️', 'Socke 🧦', 'Schnecke 🐌'],   answer: 2, sound: 'sch' },
+  { sentence: 'Der ____ liegt auf dem Spielplatz.',          options: ['Schuh 👟', 'Stein 🪨', 'Kuchen 🎂'],     answer: 1, sound: 'sch',
     extraInfo: '„Stein" beginnt mit ST – das klingt wie SCH+T: [SCHtein]!' },
-  { sentence: 'Die ____ hat acht Beine.', options: ['Seife 🧼', 'Spinne 🕷️', 'Milch 🥛'], answer: 1, sound: 'sch',
+  { sentence: 'Die ____ hat acht Beine.',                    options: ['Seife 🧼', 'Spinne 🕷️', 'Milch 🥛'],     answer: 1, sound: 'sch',
     extraInfo: '„Spinne" beginnt mit SP – das klingt wie SCH+P: [SCHpinne]!' },
-  { sentence: 'Der ____ leuchtet in der Nacht.', options: ['Stern ⭐', 'Saft 🥤', 'Koch 👨‍🍳'], answer: 0, sound: 'sch',
+  { sentence: 'Der ____ leuchtet in der Nacht.',             options: ['Stern ⭐', 'Saft 🥤', 'Koch 👨‍🍳'],        answer: 0, sound: 'sch',
     extraInfo: '„Stern" beginnt mit ST – das klingt wie SCH+T: [SCHtern]!' },
   // CH-Laute
-  { sentence: 'Ich lese gern in einem ____.', options: ['Schaf 🐑', 'Buch 📚', 'Seife 🧼'], answer: 1, sound: 'ch' },
-  { sentence: 'Ich trinke jeden Tag meine ____.', options: ['Seil 🪢', 'Schule 🏫', 'Milch 🥛'], answer: 2, sound: 'ch' },
-  { sentence: 'Zum Geburtstag backen wir einen ____.', options: ['Kuchen 🎂', 'Schuh 👟', 'Salz 🧂'], answer: 0, sound: 'ch' },
-  { sentence: 'Es ist schon spät – bald kommt die ____.', options: ['Sonne ☀️', 'Schere ✂️', 'Nacht 🌙'], answer: 2, sound: 'ch' },
-  { sentence: 'Das ____ schläft oben im Bett.', options: ['Mädchen 👧', 'Schiff 🚢', 'Seil 🪢'], answer: 0, sound: 'ch' },
-  { sentence: 'Oben auf dem Haus sitzt das ____.', options: ['Sofa 🛋️', 'Dach 🏠', 'Schaf 🐑'], answer: 1, sound: 'ch' },
+  { sentence: 'Ich lese gern in einem ____.',                options: ['Schaf 🐑', 'Buch 📚', 'Seife 🧼'],       answer: 1, sound: 'ch' },
+  { sentence: 'Ich trinke jeden Tag meine ____.',            options: ['Seil 🪢', 'Schule 🏫', 'Milch 🥛'],      answer: 2, sound: 'ch' },
+  { sentence: 'Zum Geburtstag backen wir einen ____.',       options: ['Kuchen 🎂', 'Schuh 👟', 'Salz 🧂'],      answer: 0, sound: 'ch' },
+  { sentence: 'Es ist schon spät – bald kommt die ____.',    options: ['Sonne ☀️', 'Schere ✂️', 'Nacht 🌙'],     answer: 2, sound: 'ch' },
+  { sentence: 'Das ____ singt ein schönes Lied.',            options: ['Mädchen 👧', 'Schiff 🚢', 'Seil 🪢'],    answer: 0, sound: 'ch' },
+  { sentence: 'Oben auf dem Haus ist das ____.',             options: ['Sofa 🛋️', 'Dach 🏠', 'Schaf 🐑'],        answer: 1, sound: 'ch' },
+  { sentence: 'Ich lasse einen ____ steigen.',               options: ['Drachen 🪁', 'Kuchen 🎂', 'Schatz 💎'],  answer: 1, sound: 'ch' },
+  { sentence: 'In meinem Körper sind viele ____.',           options: ['Drachen 🪁', 'Knochen 🦴', 'Schatz 💎'], answer: 1, sound: 'ch' },
   // Z-Laute
-  { sentence: 'Der ____ fährt pünktlich am Bahnhof an.', options: ['Zaun 🪵', 'Zug 🚂', 'Buch 📚'], answer: 1, sound: 'z' },
-  { sentence: 'Die ____ ist sehr sauer.', options: ['Zitrone 🍋', 'Schule 🏫', 'Nacht 🌙'], answer: 0, sound: 'z' },
-  { sentence: 'Die ____ schläft gern auf dem Sofa.', options: ['Sonne ☀️', 'Schere ✂️', 'Katze 🐱'], answer: 2, sound: 'z' },
-  { sentence: 'Wir schlafen im ____ beim Camping.', options: ['Zelt ⛺', 'Schiff 🚢', 'Dach 🏠'], answer: 0, sound: 'z' },
-  { sentence: 'Das ____ hat schwarz-weiße Streifen.', options: ['Schaf 🐑', 'Zebra 🦓', 'Kuchen 🎂'], answer: 1, sound: 'z' },
-  { sentence: 'Die ____ trägt man auf dem Kopf.', options: ['Seife 🧼', 'Milch 🥛', 'Mütze 🧢'], answer: 2, sound: 'z' },
-  { sentence: 'Der ____ liegt in der Erde versteckt.', options: ['Schatz 💎', 'Saft 🥤', 'Tuch 🧣'], answer: 0, sound: 'z' },
-  { sentence: 'Die ____ wächst unter dem Baum.', options: ['Socke 🧦', 'Wurzel 🌱', 'Kirche ⛪'], answer: 1, sound: 'z' },
+  { sentence: 'Mit meinen _____ kann ich kauen.',            options: ['Zähnen 🦷', 'Schuhen 👟', 'Knochen 🦴'], answer: 0, sound: 'ch' },
+  { sentence: 'Der ____ fährt pünktlich am Bahnhof ab.',     options: ['Zaun 🪵', 'Zug 🚂', 'Buch 📚'],          answer: 1, sound: 'z' },
+  { sentence: 'Die ____ ist sehr sauer.',                    options: ['Zitrone 🍋', 'Schule 🏫', 'Nacht 🌙'],   answer: 0, sound: 'z' },
+  { sentence: 'Die ____ schläft gern auf dem Sofa.',         options: ['Sonne ☀️', 'Schere ✂️', 'Katze 🐱'],     answer: 2, sound: 'z' },
+  { sentence: 'Wir schlafen beim Camping im ____.',          options: ['Zelt ⛺', 'Schiff 🚢', 'Dach 🏠'],       answer: 0, sound: 'z' },
+  { sentence: 'Das ____ hat schwarz-weiße Streifen.',        options: ['Schaf 🐑', 'Zebra 🦓', 'Kuchen 🎂'],     answer: 1, sound: 'z' },
+  { sentence: 'Die ____ trägt man auf dem Kopf.',            options: ['Seife 🧼', 'Milch 🥛', 'Mütze 🧢'],      answer: 2, sound: 'z' },
+  { sentence: 'Der ____ liegt in der Erde versteckt.',       options: ['Schatz 💎', 'Saft 🥤', 'Tuch 🧣'],       answer: 0, sound: 'z' },
+  { sentence: 'Die ____ wächst unten an dem Baum.',          options: ['Socke 🧦', 'Wurzel 🌱', 'Kirche ⛪'],    answer: 1, sound: 'z' },
+  { sentence: 'Der ____ wächst im Wald.',                    options: ['Pilz 🍄', 'Zug 🚂', 'Schuh 👟'],         answer: 0, sound: 'z' },
+  { sentence: 'Die Maus hat Angst vor der ____. ',           options: ['Socke 🧦', 'Nacht 🌙', 'Katze 🐈'],      answer: 0, sound: 'ch' }
 ];
 
 const tips = {
@@ -795,15 +819,16 @@ function renderIdentify() {
     </div>
 
     <div class="word-display">
+      <span class="emoji-display">${currentItem.emoji}</span>
       <div style="text-align:center;margin-bottom:4px">
         <span style="font-size:1rem;color:rgba(255,255,255,0.35);filter:blur(5px);transition:filter 0.4s" id="artikelEl">${currentItem.artikel}</span>
       </div>
       <div class="big-word" style="filter:blur(7px);transition:filter 0.4s" id="wordEl">${wordHighlighted}</div>
-      <div class="word-hint" style="margin-top:10px">${currentItem.emoji} – ${currentItem.artikel} ${currentItem.hint}</div>
+      <div class="word-hint" style="margin-top:10px">${currentItem.artikel} ${currentItem.hint}</div>
       <div style="margin-top:8px;font-family:'Fredoka One',cursive;font-size:1rem;color:rgba(255,255,255,0.25);letter-spacing:2px;filter:blur(5px);transition:filter 0.4s" id="lautEl">
         ${currentItem.lautschrift}
       </div>
-      <button onclick="document.getElementById('wordEl').style.filter='none';document.getElementById('lautEl').style.filter='none';document.getElementById('artikelEl').style.filter='none'" 
+      <button onclick="document.getElementById('wordEl').style.filter='none';document.getElementById('lautEl').style.filter='none';document.getElementById('artikelEl').style.filter='none'"
         style="margin-top:10px;background:none;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);border-radius:50px;padding:5px 16px;font-size:0.78rem;cursor:pointer">
         👁 Wort &amp; Lautschrift zeigen
       </button>
@@ -885,14 +910,18 @@ function renderSort() {
 
   function renderSortHTML() {
     const poolHTML = poolItems.map((w, i) =>
-      `<span class="sort-word" onclick="sortWord(${i})"><span style="font-size:0.7em;opacity:0.6;margin-right:3px">${w.artikel}</span>${w.emoji} ${w.word}</span>`
+      `<span class="sort-word" onclick="sortWord(${i})">
+        <span style="display:block;font-size:2.2rem;line-height:1.1">${w.emoji}</span>
+        <span style="display:block;font-size:0.65rem;opacity:0.5;margin-top:1px">${w.artikel}</span>
+        <span style="display:block;font-size:0.85rem;font-weight:700">${w.word}</span>
+      </span>`
     ).join('');
 
     const binHTML = (type, label) => `
       <div class="sort-bin ${type}-bin" id="bin-${type}">
         <div class="bin-label ${type}-bin">${label}</div>
         <div class="bin-words" id="binwords-${type}">
-          ${bins[type].map(w => `<span class="bin-word ${type}-word"><span style="font-size:0.75em;opacity:0.7">${w.artikel} </span>${w.emoji} ${w.word}</span>`).join('')}
+          ${bins[type].map(w => `<span class="bin-word ${type}-word" style="display:flex;align-items:center;gap:4px"><span style="font-size:1.2rem">${w.emoji}</span>${w.word}</span>`).join('')}
         </div>
       </div>`;
 
@@ -1100,10 +1129,10 @@ function renderPosition() {
     </div>
 
     <div class="word-display">
-      <div style="font-size:4rem;text-align:center;margin-bottom:4px">${currentItem.emoji}</div>
+      <span class="emoji-display">${currentItem.emoji}</span>
       <div class="big-word" style="font-size:clamp(2rem,9vw,3.8rem);filter:blur(7px);transition:filter 0.4s" id="wordEl">${wordHighlighted}</div>
       <div class="word-hint" style="margin-top:8px">${currentItem.artikel} ${currentItem.hint}</div>
-      <button onclick="document.getElementById('wordEl').style.filter='none'" 
+      <button onclick="document.getElementById('wordEl').style.filter='none'"
         style="margin-top:8px;background:none;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);border-radius:50px;padding:4px 14px;font-size:0.78rem;cursor:pointer">
         👁 Wort zeigen
       </button>
@@ -1262,7 +1291,7 @@ function showResults() {
     return `
       <div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;
                   background:${bg};border:1px solid ${border};text-align:left">
-        <div style="font-size:1.8rem;flex-shrink:0">${e.emoji || '📝'}</div>
+        <div style="font-size:2.6rem;flex-shrink:0;line-height:1">${e.emoji || '📝'}</div>
         <div style="flex:1;min-width:0">
           <div style="font-family:'Fredoka One',cursive;font-size:1.05rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
             ${icon} ${e.artikel ? e.artikel + ' ' : ''}${e.word || e.question || ''}
