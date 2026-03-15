@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Laut-Zauberei 🎙️</title>
+<title>Laut-Zauberei</title>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -374,14 +374,17 @@
 
   .fill-opt {
     font-family: 'Fredoka One', cursive;
-    font-size: 1.1rem;
-    padding: 10px 22px;
-    border-radius: 12px;
+    padding: 14px 16px;
+    border-radius: 16px;
     cursor: pointer;
     transition: all 0.2s;
     border: 2px solid rgba(255,255,255,0.2);
     background: rgba(255,255,255,0.08);
     color: white;
+    text-align: center;
+    min-width: 90px;
+    flex: 1;
+    max-width: 160px;
   }
 
   .fill-opt:hover { background: rgba(255,255,255,0.18); transform: scale(1.04); }
@@ -518,7 +521,7 @@
 <body>
 <div class="container">
   <header>
-    <div class="title">🎙️ Laut-Zauberei</div>
+    <div class="title">🪄 Laut-Zauberei</div>
     <div class="subtitle">Logopädisches Sprachlernspiel • S · SCH · CH · Z</div>
   </header>
 
@@ -563,13 +566,15 @@ const words = {
     { word: 'Sieb',     artikel: 'das', emoji: '🫙',  hint: 'Küchengerät mit kleinen Löchern', lautschrift: '[S-ieb]',       highlight: 'S',  position: 'vorn'  },
     { word: 'Segel',    artikel: 'das', emoji: '⛵',  hint: 'fängt den Wind auf dem Boot',     lautschrift: '[S-e-gel]',     highlight: 'S',  position: 'vorn'  },
     { word: 'Sense',    artikel: 'die', emoji: '🌾',  hint: 'Werkzeug zum Grasschneiden',      lautschrift: '[S-en-se]',     highlight: 'S',  position: 'vorn'  },
+    { word: 'Salat',    artikel: 'der', emoji: '🥬',  hint: 'Gemüsegericht mit Blättern',      lautschrift: '[S-a-lat]',     highlight: 'S',  position: 'vorn'  },
     // S in der Mitte
     { word: 'Nase',     artikel: 'die', emoji: '👃',  hint: 'damit riecht man',                  lautschrift: '[Na-S-e]',      highlight: 's',  position: 'mitte' },
+    { word: 'Insel',    artikel: 'die', emoji: '🏝️',  hint: 'kleines Stück Land im Meer',        lautschrift: '[In-S-el]',     highlight: 's',  position: 'mitte' },
     { word: 'Hose',     artikel: 'die', emoji: '👖',  hint: 'Kleidungsstück für die Beine',      lautschrift: '[Ho-S-e]',      highlight: 's',  position: 'mitte' },
     { word: 'Wiese',    artikel: 'die', emoji: '🌿',  hint: 'grüne Grasfläche',                  lautschrift: '[Wi-S-e]',      highlight: 's',  position: 'mitte' },
     { word: 'Esel',     artikel: 'der', emoji: '🫏',  hint: 'störrisches Tier mit langen Ohren', lautschrift: '[E-S-el]',      highlight: 's',  position: 'mitte' },
     { word: 'Besen',    artikel: 'der', emoji: '🧹',  hint: 'zum Fegen des Bodens',              lautschrift: '[Be-S-en]',     highlight: 's',  position: 'mitte' },
-    { word: 'Rucksack', artikel: 'der', emoji: '🎒',  hint: 'Beutel auf dem Rücken',             lautschrift: '[Ruck-S-ack]',  highlight: 's',  position: 'mitte'  },
+    { word: 'Rucksack', artikel: 'der', emoji: '🎒',  hint: 'Beutel auf dem Rücken',             lautschrift: '[Ruck-S-ack]',  highlight: 's',  position: 'mitte' },
     // S am Ende
     { word: 'Haus',     artikel: 'das', emoji: '🏡',  hint: 'darin wohnt man',                 lautschrift: '[Hau-S]',       highlight: 's',  position: 'ende'  },
     { word: 'Maus',     artikel: 'die', emoji: '🐭',  hint: 'kleines Tier mit langer Schwanz', lautschrift: '[Mau-S]',       highlight: 's',  position: 'ende'  },
@@ -582,7 +587,7 @@ const words = {
     { word: 'Schule',       artikel: 'die', emoji: '🏫', hint: 'Gebäude in dem Kinder lernen',      lautschrift: '[SCH-u-le]',       highlight: 'Sch',  position: 'vorn'  },
     { word: 'Schuh',        artikel: 'der', emoji: '👟', hint: 'trägst du am Fuß',                  lautschrift: '[SCH-uh]',         highlight: 'Sch',  position: 'vorn'  },
     { word: 'Schere',       artikel: 'die', emoji: '✂️', hint: 'zum Schneiden von Papier',          lautschrift: '[SCH-e-re]',       highlight: 'Sch',  position: 'vorn'  },
-    { word: 'Schwein',      artikel: 'das', emoji: '🐷', hint: 'rosarotes Tier auf dem Bauernhof',  lautschrift: '[SCH-w-ein]',      highlight: 'Schw', position: 'vorn'  },
+    { word: 'Schwein',      artikel: 'das', emoji: '🐖', hint: 'rosarotes Tier auf dem Bauernhof',  lautschrift: '[SCH-w-ein]',      highlight: 'Schw', position: 'vorn'  },
     { word: 'Schiff',       artikel: 'das', emoji: '🚢', hint: 'fährt auf dem Wasser',              lautschrift: '[SCH-iff]',        highlight: 'Sch',  position: 'vorn'  },
     { word: 'Schnecke',     artikel: 'die', emoji: '🐌', hint: 'Tier mit Haus auf dem Rücken',      lautschrift: '[SCH-ne-cke]',     highlight: 'Schn', position: 'vorn'  },
     { word: 'Schlange',     artikel: 'die', emoji: '🐍', hint: 'langes Tier ohne Beine',            lautschrift: '[SCH-lan-ge]',     highlight: 'Schl', position: 'vorn'  },
@@ -590,6 +595,8 @@ const words = {
     { word: 'Schokolade',   artikel: 'die', emoji: '🍫', hint: 'süße braune Leckerei',              lautschrift: '[SCH-o-ko-la-de]', highlight: 'Sch',  position: 'vorn'  },
     { word: 'Schloss',      artikel: 'das', emoji: '🏰', hint: 'großes altes Gebäude',              lautschrift: '[SCH-loss]',       highlight: 'Schl', position: 'vorn'  },
     { word: 'Schaukel',     artikel: 'die', emoji: '🪀', hint: 'damit kann man schaukeln',          lautschrift: '[SCH-au-kel]',     highlight: 'Sch',  position: 'vorn'  },
+    { word: 'Schwan',       artikel: 'der', emoji: '🦢', hint: 'großer weißer Wasservogel',         lautschrift: '[SCH-wan]',        highlight: 'Sch',  position: 'vorn'  },
+
     // SCH vorn – "st" und "sp" am Wortanfang
     { word: 'Stein',    artikel: 'der', emoji: '🪨', hint: 'hartes Ding liegt auf der Erde',        lautschrift: '[SCH-t-ein]',    highlight: 'St', position: 'vorn' },
     { word: 'Stern',    artikel: 'der', emoji: '⭐', hint: 'leuchtet nachts am Himmel',             lautschrift: '[SCH-t-ern]',    highlight: 'St', position: 'vorn' },
@@ -599,17 +606,15 @@ const words = {
     { word: 'Spiel',    artikel: 'das', emoji: '🎮', hint: 'macht viel Spaß',                       lautschrift: '[SCH-p-iel]',    highlight: 'Sp', position: 'vorn' },
     { word: 'Spiegel',  artikel: 'der', emoji: '🪞', hint: 'darin siehst du dich',                  lautschrift: '[SCH-p-ie-gel]', highlight: 'Sp', position: 'vorn' },
     // SCH in der Mitte
-    { word: 'Fisch',      artikel: 'der', emoji: '🐟', hint: 'Tier im Wasser mit Flossen',         lautschrift: '[Fi-SCH]',        highlight: 'sch', position: 'mitte' },
-    { word: 'Tisch',      artikel: 'der', emoji: '🪑', hint: 'Möbel zum Essen und Arbeiten',       lautschrift: '[Ti-SCH]',        highlight: 'sch', position: 'mitte' },
     { word: 'Tasche',     artikel: 'die', emoji: '👜', hint: 'darin trägt man Sachen',             lautschrift: '[Ta-SCH-e]',      highlight: 'sch', position: 'mitte' },
     { word: 'Wäsche',     artikel: 'die', emoji: '👕', hint: 'anderes Wort für Kleidung',          lautschrift: '[Wä-SCH-e]',      highlight: 'sch', position: 'mitte' },
     { word: 'Dusche',     artikel: 'die', emoji: '🚿', hint: 'damit wäscht man sich',              lautschrift: '[Du-SCH-e]',      highlight: 'sch', position: 'mitte' },
     { word: 'Kirsche',    artikel: 'die', emoji: '🍒', hint: 'rote süße Frucht',                   lautschrift: '[Kir-SCH-e]',     highlight: 'sch', position: 'mitte' },
     { word: 'Rutsche',    artikel: 'die', emoji: '🛝', hint: 'Gerät auf dem Spielplatz',           lautschrift: '[Rut-SCH-e]',     highlight: 'sch', position: 'mitte' },
     // SCH am Ende
+    { word: 'Fisch',      artikel: 'der', emoji: '🐟', hint: 'Tier im Wasser mit Flossen',         lautschrift: '[Fi-SCH]',        highlight: 'sch', position: 'ende' },
     { word: 'Tisch',      artikel: 'der', emoji: '🪑', hint: 'darauf stellt man Teller',           lautschrift: '[Ti-SCH]',        highlight: 'sch', position: 'ende'  },
     { word: 'Wunsch',     artikel: 'der', emoji: '⭐', hint: 'etwas das man sich erhofft',         lautschrift: '[Wun-SCH]',       highlight: 'sch', position: 'ende'  },
-    { word: 'Busch',      artikel: 'der', emoji: '🌿', hint: 'kleiner Strauch',                    lautschrift: '[Bu-SCH]',        highlight: 'sch', position: 'ende'  },
     { word: 'Rausch',     artikel: 'der', emoji: '🌊', hint: 'lautes Rauschen des Wassers',        lautschrift: '[Rau-SCH]',       highlight: 'sch', position: 'ende'  },
     { word: 'Mensch',     artikel: 'der', emoji: '🧍🏻', hint: 'kann denken und sprechen',           lautschrift: '[Men-SCH]',       highlight: 'sch', position: 'ende'  },
   ],
@@ -633,16 +638,19 @@ const words = {
     { word: 'Koch',    artikel: 'der', emoji: '👨‍🍳',hint: 'bereitet Essen zu',              lautschrift: '[Ko-CH]',      highlight: 'ch', position: 'ende'  },
     { word: 'Tuch',    artikel: 'das', emoji: '🧣', hint: 'weiches Stück Stoff',           lautschrift: '[Tu-CH]',      highlight: 'ch', position: 'ende'  },
     { word: 'Fach',    artikel: 'das', emoji: '📂', hint: 'Abteil in einem Schrank',       lautschrift: '[Fa-CH]',      highlight: 'ch', position: 'ende'  },
+    { word: 'Bach',    artikel: 'der', emoji: '🌊', hint: 'kleiner Fluss',                 lautschrift: '[Ba-CH]',      highlight: 'ch', position: 'ende'  },
+
     // CH am Ende – Ich-Laut
     { word: 'Milch',   artikel: 'die', emoji: '🥛', hint: 'weißes Getränk von der Kuh',    lautschrift: '[Mil-CH]',     highlight: 'ch', position: 'ende'  },
-    { word: 'Pech',    artikel: 'das', emoji: '😬', hint: 'wenn man Unglück hat',          lautschrift: '[Pe-CH]',      highlight: 'ch', position: 'ende'  },
-    { word: 'Storch',  artikel: 'der', emoji: '🦢', hint: 'großer weißer Wasservogel',     lautschrift: '[Stor-CH]',    highlight: 'ch', position: 'ende'  }
+    { word: 'Pech',    artikel: 'das', emoji: '😬', hint: 'wenn man Unglück hat',          lautschrift: '[Pe-CH]',      highlight: 'ch', position: 'ende'  }
+
   ]
 };
 
 // Z-Laut: [ts] – geschrieben als z, tz, oder zw am Anfang
 words.z = [
   // Z vorn
+  { word: 'Zweig',   artikel: 'der', emoji: '🌿', hint: 'kleiner Ast',                     lautschrift: '[Zw-eig]',      highlight: 'Zw', position: 'vorn'  },
   { word: 'Zahn',    artikel: 'der', emoji: '🦷', hint: 'zum Kauen und Beißen',            lautschrift: '[Z-ahn]',       highlight: 'Z',  position: 'vorn'  },
   { word: 'Zug',     artikel: 'der', emoji: '🚂', hint: 'fährt auf Schienen',              lautschrift: '[Z-ug]',        highlight: 'Z',  position: 'vorn'  },
   { word: 'Zelt',    artikel: 'das', emoji: '⛺', hint: 'schlafen beim Camping',           lautschrift: '[Z-elt]',       highlight: 'Z',  position: 'vorn'  },
@@ -656,18 +664,18 @@ words.z = [
   { word: 'Zwerg',   artikel: 'der', emoji: '🧙', hint: 'kleines Fabelwesen',              lautschrift: '[Zw-erg]',      highlight: 'Zw', position: 'vorn'  },
   { word: 'Zopf',    artikel: 'der', emoji: '👱', hint: 'geflochtene Haare',               lautschrift: '[Z-opf]',       highlight: 'Z',  position: 'vorn'  },
   // Z in der Mitte (tz / z)
-  { word: 'Katze',   artikel: 'die', emoji: '🐱', hint: 'beliebtes Haustier',              lautschrift: '[Ka-TZ-e]',     highlight: 'tz', position: 'mitte' },
+  { word: 'Katze',   artikel: 'die', emoji: '🐈', hint: 'beliebtes Haustier',              lautschrift: '[Ka-TZ-e]',     highlight: 'tz', position: 'mitte' },
   { word: 'Kerze',   artikel: 'die', emoji: '🕯️', hint: 'leuchtet mit Flamme',             lautschrift: '[Ker-Z-e]',     highlight: 'z',  position: 'mitte' },
   { word: 'Mütze',   artikel: 'die', emoji: '🧢', hint: 'Kopfbedeckung',                   lautschrift: '[Mü-TZ-e]',     highlight: 'tz', position: 'mitte' },
   { word: 'Wurzel',  artikel: 'die', emoji: '🌱', hint: 'wächst unter der Erde',           lautschrift: '[Wur-Z-el]',    highlight: 'z',  position: 'mitte' },
   { word: 'Pfütze',  artikel: 'die', emoji: '💧', hint: 'Wasserlache nach dem Regen',      lautschrift: '[Pfü-TZ-e]',    highlight: 'tz', position: 'mitte' },
   { word: 'Tatze',   artikel: 'die', emoji: '🐾', hint: 'Pfote eines Tieres',              lautschrift: '[Ta-TZ-e]',     highlight: 'tz', position: 'mitte' },
+  { word: 'Pizza',   artikel: 'die', emoji: '🍕', hint: 'Käse und Tomaten auf Teig',       lautschrift: '[Pi-Z-a]',      highlight: 'z',  position: 'mitte' },
   { word: 'Brezel',  artikel: 'die', emoji: '🥨', hint: 'Gebäck mit Knoten',               lautschrift: '[Bre-TZ-el]',   highlight: 'tz', position: 'mitte' },
   // Z am Ende (z / tz)
-  { word: 'Sitz',    artikel: 'der', emoji: '💺', hint: 'Platz zum Hinsetzen',             lautschrift: '[Si-TZ]',       highlight: 'tz', position: 'ende'  },
+  { word: 'Blitz',   artikel: 'der', emoji: '💺', hint: 'kommt vor dem Donner',            lautschrift: '[Bli-TZ]',      highlight: 'tz', position: 'ende'  },
   { word: 'Netz',    artikel: 'das', emoji: '🕸️', hint: 'zum Fangen von Fischen',          lautschrift: '[Ne-TZ]',       highlight: 'tz', position: 'ende'  },
   { word: 'Witz',    artikel: 'der', emoji: '😄', hint: 'macht Leute lachen',              lautschrift: '[Wi-TZ]',       highlight: 'tz', position: 'ende'  },
-  { word: 'Schatz',  artikel: 'der', emoji: '💎', hint: 'wertvoller Fund',                 lautschrift: '[Scha-TZ]',     highlight: 'tz', position: 'ende'  },
   { word: 'Pelz',    artikel: 'der', emoji: '🦊', hint: 'weiches Tierfell',                lautschrift: '[Pel-Z]',       highlight: 'z',  position: 'ende'  },
   { word: 'Pilz',    artikel: 'der', emoji: '🍄', hint: 'wächst im Wald',                  lautschrift: '[Pil-Z]',       highlight: 'z',  position: 'ende'  },
   { word: 'Kreuz',   artikel: 'das', emoji: '✝️', hint: 'Form mit zwei Linien',            lautschrift: '[Kreu-Z]',      highlight: 'z',  position: 'ende'  }
@@ -680,53 +688,59 @@ function artDefCap(w) { return w.artikel.charAt(0).toUpperCase() + w.artikel.sli
 
 const fillQuestions = [
   // S-Laute
-  { sentence: 'Die ____ scheint heute besonders hell.',      options: ['Sonne ☀️', 'Schule 🏫', 'Kirche ⛪'],    answer: 0, sound: 's' },
-  { sentence: 'Ich wasche meine Hände mit der ____.',        options: ['Seife 🧼', 'Schere ✂️', 'Milch 🥛'],     answer: 0, sound: 's' },
-  { sentence: 'Papa trinkt einen Glas ____ zum Frühstück.',  options: ['Saft 🥤', 'Schiff 🚢', 'Buch 📚'],       answer: 0, sound: 's' },
-  { sentence: 'Ich sitze gemütlich auf dem ____.',           options: ['Sofa 🛋️', 'Schuh 👟', 'Dach 🏠'],        answer: 0, sound: 's' },
-  { sentence: 'Eine ____ ist ganz schön stark.',             options: ['Ameise 🐜', 'Schnecke 🐌', 'Katze 🐱'],  answer: 0, sound: 's' },
-  { sentence: 'Das ____ hängt an der Kletterwand.',          options: ['Säge 🪚', 'Seil 🪢', 'Schere ✂️'],       answer: 1, sound: 's' },
+  { sentence: 'Die ____ scheint heute besonders hell.',      options: ['Sonne ☀️', 'Schule 🏫', 'Kirche ⛪'],      answer: 0, sound: 's' },
+  { sentence: 'Ich wasche meine Hände mit der ____.',        options: ['Seife 🧼', 'Schere ✂️', 'Milch 🥛'],       answer: 0, sound: 's' },
+  { sentence: 'Papa trinkt einen Glas ____ zum Frühstück.',  options: ['Saft 🥤', 'Schiff 🚢', 'Buch 📚'],         answer: 0, sound: 's' },
+  { sentence: 'Ich sitze gemütlich auf dem ____.',           options: ['Sofa 🛋️', 'Schuh 👟', 'Dach 🏠'],          answer: 0, sound: 's' },
+  { sentence: '____ wird aus Milch gemacht.',                options: ['Seife 🧼', 'Sonne ☀️', 'Käse 🧀'],         answer: 2, sound: 's' },
+  { sentence: 'Eine ____ ist ganz schön stark.',             options: ['Ameise 🐜', 'Schnecke 🐌', 'Katze 🐈'],    answer: 0, sound: 's' },
+  { sentence: 'Das ____ hängt an der Kletterwand.',          options: ['Säge 🪚', 'Seil 🪢', 'Schere ✂️'],         answer: 1, sound: 's' },
   // SCH-Laute
-  { sentence: 'Das ____ blökt laut auf der Wiese.',          options: ['Sofa 🛋️', 'Buch 📚', 'Schaf 🐑'],        answer: 2, sound: 'sch' },
-  { sentence: 'Das ____ hat einen Ringelschwanz.',           options: ['Schaf 🐑', 'Zebra 🦓', 'Schwein 🐖'],    answer: 2, sound: 'sch' },
-  { sentence: 'Das ____ fährt über das Meer.',               options: ['Schiff 🚢', 'Saft 🥤', 'Tuch 🧣'],       answer: 0, sound: 'sch' },
-  { sentence: 'Mama schneidet Papier mit der ____.',         options: ['Suppe 🍲', 'Schere ✂️', 'Nacht 🌙'],     answer: 1, sound: 'sch' },
-  { sentence: 'Die ____ kriecht ganz langsam über den Weg.', options: ['Sonne ☀️', 'Socke 🧦', 'Schnecke 🐌'],   answer: 2, sound: 'sch' },
-  { sentence: 'Der ____ liegt auf dem Spielplatz.',          options: ['Schuh 👟', 'Stein 🪨', 'Kuchen 🎂'],     answer: 1, sound: 'sch',
+  { sentence: 'Das ____ blökt laut auf der Wiese.',          options: ['Sofa 🛋️', 'Buch 📚', 'Schaf 🐑'],          answer: 2, sound: 'sch' },
+  { sentence: 'Wenn es kalt ist, brauch ich einen ____.',    options: ['Zahn 🦷', 'Schal 🧣', 'Pilz 🍄'],          answer: 1, sound: 'sch' },
+  { sentence: 'Mit der _____ kann man im Dunkeln sehen.',    options: ['Taschenlampe 🔦', 'Säge 🪚', 'Socke 🧦'],  answer: 0, sound: 'sch' },
+  { sentence: 'Das ____ hat einen Ringelschwanz.',           options: ['Schaf 🐑', 'Zebra 🦓', 'Schwein 🐖'],      answer: 2, sound: 'sch' },
+  { sentence: 'Das ____ fährt über das Meer.',               options: ['Schiff 🚢', 'Saft 🥤', 'Tuch 🧣'],         answer: 0, sound: 'sch' },
+  { sentence: 'Ich fahre mit meinen ____ über die Straße.',  options: ['Rollschuhe 🛼', 'Zebras 🦓', 'Socken 🧦'], answer: 0, sound: 'sch' },
+  { sentence: 'Die ____ halten meine Hände warm.',           options: ['Handschuhe 🧤', 'Zebras 🦓', 'Pilze 🍄'],  answer: 0, sound: 'sch' },
+  { sentence: 'Mama schneidet Papier mit der ____.',         options: ['Suppe 🍲', 'Schere ✂️', 'Nacht 🌙'],       answer: 1, sound: 'sch' },
+  { sentence: 'Die ____ kriecht ganz langsam über den Weg.', options: ['Sonne ☀️', 'Socke 🧦', 'Schnecke 🐌'],     answer: 2, sound: 'sch' },
+  { sentence: '____ sind ein kleines, rotes Obst.',          options: ['Schafe 🐑', 'Kirschen 🍒', 'Schuhe 👟'],   answer: 1, sound: 'sch' },
+  { sentence: 'Der ____ liegt auf dem Spielplatz.',          options: ['Schuh 👟', 'Stein 🪨', 'Kuchen 🎂'],       answer: 1, sound: 'sch',
     extraInfo: '„Stein" beginnt mit ST – das klingt wie SCH+T: [SCHtein]!' },
-  { sentence: 'Die ____ hat acht Beine.',                    options: ['Seife 🧼', 'Spinne 🕷️', 'Milch 🥛'],     answer: 1, sound: 'sch',
+  { sentence: 'Die ____ hat acht Beine.',                    options: ['Seife 🧼', 'Spinne 🕷️', 'Milch 🥛'],       answer: 1, sound: 'sch',
     extraInfo: '„Spinne" beginnt mit SP – das klingt wie SCH+P: [SCHpinne]!' },
-  { sentence: 'Der ____ leuchtet in der Nacht.',             options: ['Stern ⭐', 'Saft 🥤', 'Koch 👨‍🍳'],        answer: 0, sound: 'sch',
+  { sentence: 'Der ____ leuchtet in der Nacht.',             options: ['Stern ⭐', 'Saft 🥤', 'Koch 👨‍🍳'],          answer: 0, sound: 'sch',
     extraInfo: '„Stern" beginnt mit ST – das klingt wie SCH+T: [SCHtern]!' },
   // CH-Laute
-  { sentence: 'Ich lese gern in einem ____.',                options: ['Schaf 🐑', 'Buch 📚', 'Seife 🧼'],       answer: 1, sound: 'ch' },
-  { sentence: 'Ich trinke jeden Tag meine ____.',            options: ['Seil 🪢', 'Schule 🏫', 'Milch 🥛'],      answer: 2, sound: 'ch' },
-  { sentence: 'Zum Geburtstag backen wir einen ____.',       options: ['Kuchen 🎂', 'Schuh 👟', 'Salz 🧂'],      answer: 0, sound: 'ch' },
-  { sentence: 'Es ist schon spät – bald kommt die ____.',    options: ['Sonne ☀️', 'Schere ✂️', 'Nacht 🌙'],     answer: 2, sound: 'ch' },
-  { sentence: 'Das ____ singt ein schönes Lied.',            options: ['Mädchen 👧', 'Schiff 🚢', 'Seil 🪢'],    answer: 0, sound: 'ch' },
-  { sentence: 'Oben auf dem Haus ist das ____.',             options: ['Sofa 🛋️', 'Dach 🏠', 'Schaf 🐑'],        answer: 1, sound: 'ch' },
-  { sentence: 'Ich lasse einen ____ steigen.',               options: ['Drachen 🪁', 'Kuchen 🎂', 'Schatz 💎'],  answer: 1, sound: 'ch' },
-  { sentence: 'In meinem Körper sind viele ____.',           options: ['Drachen 🪁', 'Knochen 🦴', 'Schatz 💎'], answer: 1, sound: 'ch' },
+  { sentence: 'Ich lese gern in einem ____.',                options: ['Schaf 🐑', 'Buch 📚', 'Seife 🧼'],         answer: 1, sound: 'ch' },
+  { sentence: 'Ich trinke jeden Tag meine ____.',            options: ['Seil 🪢', 'Schule 🏫', 'Milch 🥛'],        answer: 2, sound: 'ch' },
+  { sentence: 'Zum Geburtstag backen wir einen ____.',       options: ['Kuchen 🎂', 'Schuh 👟', 'Zug 🚂'],         answer: 0, sound: 'ch' },
+  { sentence: 'Es ist schon spät – bald kommt die ____.',    options: ['Sonne ☀️', 'Schere ✂️', 'Nacht 🌙'],       answer: 2, sound: 'ch' },
+  { sentence: 'Das ____ singt ein schönes Lied.',            options: ['Mädchen 👧', 'Schiff 🚢', 'Seil 🪢'],      answer: 0, sound: 'ch' },
+  { sentence: 'Oben auf dem Haus ist das ____.',             options: ['Sofa 🛋️', 'Dach 🏠', 'Schaf 🐑'],          answer: 1, sound: 'ch' },
+  { sentence: 'Ich lasse einen ____ steigen.',               options: ['Drachen 🪁', 'Kuchen 🎂', 'Schatz 💎'],    answer: 1, sound: 'ch' },
+  { sentence: 'In meinem Körper sind viele ____.',           options: ['Drachen 🪁', 'Knochen 🦴', 'Schätze 💎'],  answer: 1, sound: 'ch' },
   // Z-Laute
-  { sentence: 'Mit meinen _____ kann ich kauen.',            options: ['Zähnen 🦷', 'Schuhen 👟', 'Knochen 🦴'], answer: 0, sound: 'ch' },
-  { sentence: 'Der ____ fährt pünktlich am Bahnhof ab.',     options: ['Zaun 🪵', 'Zug 🚂', 'Buch 📚'],          answer: 1, sound: 'z' },
-  { sentence: 'Die ____ ist sehr sauer.',                    options: ['Zitrone 🍋', 'Schule 🏫', 'Nacht 🌙'],   answer: 0, sound: 'z' },
-  { sentence: 'Die ____ schläft gern auf dem Sofa.',         options: ['Sonne ☀️', 'Schere ✂️', 'Katze 🐱'],     answer: 2, sound: 'z' },
-  { sentence: 'Wir schlafen beim Camping im ____.',          options: ['Zelt ⛺', 'Schiff 🚢', 'Dach 🏠'],       answer: 0, sound: 'z' },
-  { sentence: 'Das ____ hat schwarz-weiße Streifen.',        options: ['Schaf 🐑', 'Zebra 🦓', 'Kuchen 🎂'],     answer: 1, sound: 'z' },
-  { sentence: 'Die ____ trägt man auf dem Kopf.',            options: ['Seife 🧼', 'Milch 🥛', 'Mütze 🧢'],      answer: 2, sound: 'z' },
-  { sentence: 'Der ____ liegt in der Erde versteckt.',       options: ['Schatz 💎', 'Saft 🥤', 'Tuch 🧣'],       answer: 0, sound: 'z' },
-  { sentence: 'Die ____ wächst unten an dem Baum.',          options: ['Socke 🧦', 'Wurzel 🌱', 'Kirche ⛪'],    answer: 1, sound: 'z' },
-  { sentence: 'Der ____ wächst im Wald.',                    options: ['Pilz 🍄', 'Zug 🚂', 'Schuh 👟'],         answer: 0, sound: 'z' },
-  { sentence: 'Die Maus hat Angst vor der ____. ',           options: ['Socke 🧦', 'Nacht 🌙', 'Katze 🐈'],      answer: 0, sound: 'ch' }
+  { sentence: 'Mit meinen ____ kann ich kauen.',             options: ['Zähnen 🦷', 'Schuhen 👟', 'Knochen 🦴'],   answer: 0, sound: 'z' },
+  { sentence: 'Der ____ fährt pünktlich am Bahnhof ab.',     options: ['Zaun 🪵', 'Zug 🚂', 'Buch 📚'],            answer: 1, sound: 'z' },
+  { sentence: 'Die ____ ist sehr sauer.',                    options: ['Zitrone 🍋', 'Schule 🏫', 'Nacht 🌙'],     answer: 0, sound: 'z' },
+  { sentence: 'Die ____ schläft gern auf dem Sofa.',         options: ['Sonne ☀️', 'Schere ✂️', 'Katze 🐈'],       answer: 2, sound: 'z' },
+  { sentence: 'Wir schlafen beim Camping im ____.',          options: ['Zelt ⛺', 'Schiff 🚢', 'Dach 🏠'],         answer: 0, sound: 'z' },
+  { sentence: 'Das ____ hat schwarz-weiße Streifen.',        options: ['Schaf 🐑', 'Zebra 🦓', 'Kuchen 🎂'],       answer: 1, sound: 'z' },
+  { sentence: 'Die ____ trägt man auf dem Kopf.',            options: ['Seife 🧼', 'Milch 🥛', 'Mütze 🧢'],        answer: 2, sound: 'z' },
+  { sentence: 'Der ____ liegt in der Erde versteckt.',       options: ['Schatz 💎', 'Saft 🥤', 'Tuch 🧣'],         answer: 0, sound: 'z' },
+  { sentence: 'Die ____ wächst unten an dem Baum.',          options: ['Socke 🧦', 'Wurzel 🌱', 'Kirche ⛪'],      answer: 1, sound: 'z' },
+  { sentence: 'Der ____ wächst im Wald.',                    options: ['Pilz 🍄', 'Zug 🚂', 'Schuh 👟'],           answer: 0, sound: 'z' },
+  { sentence: 'Die Maus hat Angst vor der ____. ',           options: ['Socke 🧦', 'Nacht 🌙', 'Katze 🐈'],        answer: 3, sound: 'z' }
 ];
 
 const tips = {
-  s: '\"S\" klingt wie ein leises Zischen – aber nur vor Vokalen: Sonne, Seife, Salz 🐍',
-  sch: '\"SCH\" klingt wie Schweigen: shhh 🤫 – Achtung: auch ST und SP am Wortanfang klingen wie SCH! Stein = [SCHtein], Spiel = [SCHpiel]',
-  ch: '\"CH\" hat zwei Klänge: nach a/o/u = Ach-Laut (Bu-CH, Na-CHt) · nach e/i/ä = Ich-Laut (Mäd-CH-en, Mil-CH) 🔥',
-  z: '\"Z\" klingt wie ein kurzes TS – wie in Zug, Zahn, Katze 🦓 Auch tz und zw enthalten diesen Laut!',
-  general: '⚠️ Merke: „ST" und „SP" am Wortanfang klingen immer wie SCH! Stein→[SCHtein] · Spinne→[SCHpinne]',
+  s: '\"S\" klingt wie das Summen einer Biene 🐝 – aber nur vor Vokalen: Sonne, Seife, Salz',
+  sch: '\"SCH\" klingt wie das Zischen einer Dampflok 🚂 – Achtung: auch ST und SP am Wortanfang klingen wie SCH! Stein = [SCHtein], Spiel = [SCHpiel]',
+  ch: '\"CH\" hat zwei Klänge: nach a/o/u = Ach-Laut (Bu-CH, Na-CHt)· nach e/i/ä = Ich-Laut (Mäd-CH-en, Mil-CH) Wie das Kichern einer Hexe 🧙🏻‍♀️',
+  z: '\"Z\" klingt wie das Zischen einer Schlange 🐍 – wie in Zug, Zahn, Katze - Auch tz und zw enthalten diesen Laut!',
+  general: '',
   position: '📍 Höre genau hin: Ist der Laut ganz am Anfang, irgendwo in der Mitte oder am Ende des Wortes?'
 };
 
@@ -742,6 +756,7 @@ const TOTAL_ROUNDS = 10;
 // Protokoll jeder Runde für die Abschlussauswertung
 // Einträge: { emoji, word, artikel, laut, position, correctAnswer, givenAnswer, wasCorrect, mode }
 let roundLog = [];
+let fillOrder = [];
 
 // Sort mode state
 let sortWords = [];
@@ -770,7 +785,8 @@ function setTip(type) {
 // ─── Mode switching ──────────────────────────────────────────────────────────
 function setMode(m) {
   mode = m;
-  round = 0; score = 0; correctCount = 0;
+  round = 0; score = 0; correctCount = 0; roundLog = [];
+  fillOrder = shuffle([...Array(fillQuestions.length).keys()]);
   document.querySelectorAll('.mode-tab').forEach(t => t.classList.remove('active'));
   event.target.classList.add('active');
   updateScoreboard();
@@ -786,7 +802,7 @@ function renderGame() {
   else renderFill();
 }
 
-// Helper: highlight letters in word
+// Helper: highlight letters in word (color deferred until reveal)
 function highlightWord(word, highlight, colorVar) {
   if (!highlight) return word;
   const idx = word.toLowerCase().indexOf(highlight.toLowerCase());
@@ -794,7 +810,15 @@ function highlightWord(word, highlight, colorVar) {
   const before = word.slice(0, idx);
   const match = word.slice(idx, idx + highlight.length);
   const after = word.slice(idx + highlight.length);
-  return `${before}<span style="color:${colorVar};text-decoration:underline;text-underline-offset:6px">${match}</span>${after}`;
+  return `${before}<span data-color="${colorVar}" style="text-decoration:underline;text-underline-offset:6px">${match}</span>${after}`;
+}
+
+// Reveal word: remove blur and apply deferred colors
+function revealWord(elId) {
+  const el = document.getElementById(elId);
+  if (!el) return;
+  el.style.filter = 'none';
+  el.querySelectorAll('[data-color]').forEach(s => s.style.color = s.dataset.color);
 }
 
 // ─── MODE 1: Identify ────────────────────────────────────────────────────────
@@ -812,10 +836,10 @@ function renderIdentify() {
     <div class="progress-wrap"><div class="progress-bar" style="width:${progress}%"></div></div>
 
     <div class="laut-legend">
-      <span class="laut-chip s">S</span>
-      <span class="laut-chip sch">SCH</span>
-      <span class="laut-chip ch">CH</span>
-      <span class="laut-chip z">Z</span>
+      <span class="laut-chip s">S 🐝</span>
+      <span class="laut-chip sch">SCH 🚂</span>
+      <span class="laut-chip ch">CH 🧙🏻‍♀️</span>
+      <span class="laut-chip z">Z 🐍</span>
     </div>
 
     <div class="word-display">
@@ -828,7 +852,7 @@ function renderIdentify() {
       <div style="margin-top:8px;font-family:'Fredoka One',cursive;font-size:1rem;color:rgba(255,255,255,0.25);letter-spacing:2px;filter:blur(5px);transition:filter 0.4s" id="lautEl">
         ${currentItem.lautschrift}
       </div>
-      <button onclick="document.getElementById('wordEl').style.filter='none';document.getElementById('lautEl').style.filter='none';document.getElementById('artikelEl').style.filter='none'"
+      <button onclick="revealWord('wordEl');document.getElementById('lautEl').style.filter='none';document.getElementById('artikelEl').style.filter='none'"
         style="margin-top:10px;background:none;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);border-radius:50px;padding:5px 16px;font-size:0.78rem;cursor:pointer">
         👁 Wort &amp; Lautschrift zeigen
       </button>
@@ -839,10 +863,10 @@ function renderIdentify() {
     </p>
 
     <div class="answer-btns">
-      <button class="ans-btn s-btn" onclick="answerIdentify('s', this)">S</button>
-      <button class="ans-btn sch-btn" onclick="answerIdentify('sch', this)">SCH</button>
-      <button class="ans-btn ch-btn" onclick="answerIdentify('ch', this)">CH</button>
-      <button class="ans-btn z-btn" onclick="answerIdentify('z', this)">Z</button>
+      <button class="ans-btn s-btn" onclick="answerIdentify('s', this)">S 🐝</button>
+      <button class="ans-btn sch-btn" onclick="answerIdentify('sch', this)">SCH 🚂</button>
+      <button class="ans-btn ch-btn" onclick="answerIdentify('ch', this)">CH 🧙🏻‍♀️</button>
+      <button class="ans-btn z-btn" onclick="answerIdentify('z', this)">Z 🐍</button>
     </div>
 
     <div class="feedback hidden" id="feedback"></div>
@@ -858,7 +882,7 @@ function answerIdentify(chosen, btn) {
   fb.classList.remove('hidden');
 
   // Reveal the word
-  document.getElementById('wordEl').style.filter = 'none';
+  revealWord('wordEl');
   document.getElementById('lautEl').style.filter = 'none';
 
   // Extra phonetic explanation for tricky words (st/sp written as S but sounds like SCH)
@@ -904,7 +928,7 @@ function answerIdentify(chosen, btn) {
 
 // ─── MODE 2: Sort ────────────────────────────────────────────────────────────
 function renderSort() {
-  const pool = shuffle(allWordsList()).slice(0, 9);
+  const pool = shuffle(allWordsList()).slice(0, 10);
   let bins = { s: [], sch: [], ch: [], z: [] };
   let poolItems = [...pool];
 
@@ -934,10 +958,10 @@ function renderSort() {
       <p class="sort-instruction">Sortiere die Wörter nach ihrem Laut!</p>
       <div class="sort-word-pool" id="pool">${poolHTML || '<span style="color:rgba(255,255,255,0.3);font-size:0.9rem">Alle Wörter wurden sortiert!</span>'}</div>
       <div class="sort-bins">
-        ${binHTML('s','S')}
-        ${binHTML('sch','SCH')}
-        ${binHTML('ch','CH')}
-        ${binHTML('z','Z')}
+        ${binHTML('s','S 🐝')}
+        ${binHTML('sch','SCH 🚂')}
+        ${binHTML('ch','CH 🧙🏻‍♀️')}
+        ${binHTML('z','Z 🐍')}
       </div>
       ${allPlaced ? `<button class="next-btn" onclick="checkSort(pool_ref, bins_ref)">Auswerten ✨</button>` : ''}
       <div class="feedback hidden" id="feedback"></div>
@@ -1036,14 +1060,20 @@ function renderSort() {
 
 // ─── MODE 3: Fill ────────────────────────────────────────────────────────────
 function renderFill() {
-  const qIdx = round % fillQuestions.length;
+  const qIdx = fillOrder.length ? fillOrder[round % fillOrder.length] : round % fillQuestions.length;
   const q = fillQuestions[qIdx];
   answered = false;
   const progress = (round / TOTAL_ROUNDS) * 100;
 
-  const optBtns = q.options.map((opt, i) =>
-    `<button class="fill-opt" onclick="answerFill(${i}, this, ${q.answer}, '${q.sound}', ${qIdx})">${opt}</button>`
-  ).join('');
+  const optBtns = q.options.map((opt, i) => {
+    const parts = opt.trim().split(' ');
+    const emoji = parts[parts.length - 1];
+    const word = parts.slice(0, -1).join(' ');
+    return `<button class="fill-opt" onclick="answerFill(${i}, this, ${q.answer}, '${q.sound}', ${qIdx})">
+      <span style="display:block;font-size:3rem;line-height:1.2;margin-bottom:6px">${emoji}</span>
+      <span style="display:block;font-size:0.9rem;font-weight:700">${word}</span>
+    </button>`;
+  }).join('');
 
   document.getElementById('mainCard').innerHTML = `
     <div class="round-label">Runde ${round + 1} von ${TOTAL_ROUNDS}</div>
@@ -1074,17 +1104,18 @@ function answerFill(idx, btn, correctIdx, sound, qIdx) {
     if (i === idx && !correct) b.style.background = 'rgba(255,107,107,0.3)';
   });
 
-  const extra = q.extraInfo ? `<br><span style="font-size:0.85rem;opacity:0.85">💡 ${q.extraInfo}</span>` : '';
+  const extra = q.extraInfo ? `<div style="margin-top:8px;font-size:0.85rem;opacity:0.85">💡 ${q.extraInfo}</div>` : '';
 
   if (correct) {
     score += 10;
     correctCount++;
     fb.className = 'feedback correct-fb';
-    fb.innerHTML = `✅ Richtig! Laut <strong>${sound.toUpperCase()}</strong> – gut gehört!${extra}`;
+    fb.style.display = 'block';
+    fb.innerHTML = `<div>✅ Richtig! Laut <strong>${sound.toUpperCase()}</strong> – gut gehört!</div>${extra}`;
   } else {
     fb.className = 'feedback wrong-fb';
-    const correctWord = document.querySelectorAll('.fill-opt')[correctIdx].textContent;
-    fb.innerHTML = `❌ Richtig wäre <strong>${correctWord}</strong> (Laut: <strong>${sound.toUpperCase()}</strong>).${extra}`;
+    fb.style.display = 'block';
+    fb.innerHTML = `<div>❌ Richtig wäre <strong>${q.options[correctIdx]}</strong> (Laut: <strong>${sound.toUpperCase()}</strong>).</div>${extra}`;
   }
 
   roundLog.push({
@@ -1132,7 +1163,7 @@ function renderPosition() {
       <span class="emoji-display">${currentItem.emoji}</span>
       <div class="big-word" style="font-size:clamp(2rem,9vw,3.8rem);filter:blur(7px);transition:filter 0.4s" id="wordEl">${wordHighlighted}</div>
       <div class="word-hint" style="margin-top:8px">${currentItem.artikel} ${currentItem.hint}</div>
-      <button onclick="document.getElementById('wordEl').style.filter='none'"
+      <button onclick="revealWord('wordEl')"
         style="margin-top:8px;background:none;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.5);border-radius:50px;padding:4px 14px;font-size:0.78rem;cursor:pointer">
         👁 Wort zeigen
       </button>
@@ -1189,7 +1220,7 @@ function answerPosition(chosen, btn) {
   const correct = chosen === currentItem.position;
 
   // Reveal word
-  document.getElementById('wordEl').style.filter = 'none';
+  revealWord('wordEl');
 
   // Animate position bar
   const barIds = { vorn: 'posBarVorn', mitte: 'posBarMitte', ende: 'posBarEnde' };
@@ -1356,11 +1387,13 @@ function switchTab(tab) {
 
 function restartGame() {
   round = 0; score = 0; correctCount = 0; roundLog = [];
+  fillOrder = shuffle([...Array(fillQuestions.length).keys()]);
   updateScoreboard();
   renderGame();
 }
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
+fillOrder = shuffle([...Array(fillQuestions.length).keys()]);
 updateScoreboard();
 renderGame();
 </script>
